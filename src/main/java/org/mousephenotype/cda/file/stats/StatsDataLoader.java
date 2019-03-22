@@ -19,7 +19,7 @@ public class StatsDataLoader implements CommandLineRunner {
 
 	
 	public static void main(String []args) {
-		System.out.println("running main method in StatsDataLoader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("running main stats service method in StatsDataLoader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		SpringApplication.run(StatsDataLoader.class, args);
 	}
 	

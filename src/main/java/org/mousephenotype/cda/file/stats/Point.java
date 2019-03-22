@@ -7,6 +7,10 @@ public class Point {
 	private String sampleType;
 	private Float bodyWeight;
 	
+	public Point() {
+		
+	}
+	
 	public Point(String value, String sex, String sampleType, Float bodyWeight) {
 		this.value=value;
 		this.sex=sex;

@@ -86,7 +86,7 @@ public class FileStatsDao {
     	String json="{\"result\""+sections[1];
     	System.out.println("summaryInfo="+summaryInfo);
     	
-    	String[] summaryFields = summaryInfo.split("\t");
+    	
     	
     	//System.out.println("json="+json);
     	
@@ -108,10 +108,24 @@ public class FileStatsDao {
     	int responseSize=value.getResult().getDetails().getOriginalResponse().size();
     	int dateOfExperimentSize=value.getResult().getDetails().getOriginalDateOfExperiment().size();
     	assert(sampleGroupSize==sexSize && sampleGroupSize==responseSize && sampleGroupSize==dateOfExperimentSize);//all these lists should be the same size as refer to points.
-    	stats.setParameterStableId(summaryFields[4]);
-    	stats.setParameterStableName(summaryFields[5]);
+    	
+    	addDataFromFileHeader(summaryInfo, stats);
     	return stats;
     }
+
+	private void addDataFromFileHeader(String summaryInfo, Stats stats) {
+		String[] summaryFields = summaryInfo.split("\t");
+    	stats.setParameterStableId(summaryFields[4]);
+    	stats.setParameterStableName(summaryFields[5]);
+    	stats.setCenter(summaryFields[6]);
+    	stats.setAllele(summaryFields[7]);
+    	stats.setGeneSymbol(summaryFields[8]);
+    	stats.setGeneAccession(summaryFields[9]);
+    	stats.setAlleleAccession(summaryFields[12]);
+    	stats.setMetaData(summaryFields[13]);
+    	stats.setZygosity(summaryFields[14]);
+    	stats.setColonyId(summaryFields[15]);
+	}
     
     /**
      * 

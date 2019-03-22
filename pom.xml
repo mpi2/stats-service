@@ -4,8 +4,8 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>org.springframework</groupId>
-    <artifactId>org.mousephenotype.cda</artifactId>
+    <groupId>uk.ac.ebi.phenotype</groupId>
+    <artifactId>stats-rest-service</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
