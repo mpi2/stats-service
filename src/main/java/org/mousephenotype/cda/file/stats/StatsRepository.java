@@ -12,6 +12,12 @@ public interface StatsRepository extends MongoRepository<Stats, String> {
 
 	List<Stats> findAll();
 	
+	//http://localhost:8080/stats/search/findByGeneSymbolAndParameterStableId?geneSymbol=Arel1&parameterStableId=IMPC_HEM_038_001
+	List<Stats> findByGeneSymbolAndParameterStableId(@Param("geneSymbol") String geneSymbol, @Param("parameterStableId") String parameterStableId);
+	
+	//http://localhost:8080/stats/search/findByGeneSymbol?geneSymbol=Arel1
+	List<Stats> findByGeneSymbol(@Param("geneSymbol") String geneSymbol);
+	
 	
 	//http://localhost:8080/stats/search/findByParameterStableId?parameterStableId=IMPC_HEM_038_001
 	List<Stats> findByParameterStableId(@Param("parameterStableId") String parameterStableId);
