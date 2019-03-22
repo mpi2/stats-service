@@ -117,12 +117,13 @@ public class FileStatsDao {
 		String[] summaryFields = summaryInfo.split("\t");
     	stats.setParameterStableId(summaryFields[4]);
     	stats.setParameterStableName(summaryFields[5]);
-    	stats.setCenter(summaryFields[6]);
+    	stats.setPhenotypingCenter(summaryFields[6]);
     	stats.setAllele(summaryFields[7]);
     	stats.setGeneSymbol(summaryFields[8]);
     	stats.setGeneAccession(summaryFields[9]);
+    	stats.setPipelineStableId(summaryFields[11]);
     	stats.setAlleleAccession(summaryFields[12]);
-    	stats.setMetaData(summaryFields[13]);
+    	stats.setMetaDataGroup(summaryFields[13]);
     	stats.setZygosity(summaryFields[14]);
     	stats.setColonyId(summaryFields[15]);
 	}

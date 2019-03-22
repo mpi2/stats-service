@@ -14,18 +14,44 @@ public class Stats  {
 	
 	private String parameterStableName;
 	
+	private String pipelineStableId;
+	
+	public String getPipelineStableId() {
+		return pipelineStableId;
+	}
+
+	public void setPipelineStableId(String pipelineStableId) {
+		this.pipelineStableId = pipelineStableId;
+	}
+
 	private String allele;
 	
 	private String geneSymbol;
 	
-	private String center;
+	private String phenotypingCenter;
 	
 	private String geneAccession;
 	
 	private String alleleAccession;
 	
-	private String metaData;
+	private String metaDataGroup;
 	
+	public String getPhenotypingCenter() {
+		return phenotypingCenter;
+	}
+
+	public void setPhenotypingCenter(String phenotypingCenter) {
+		this.phenotypingCenter = phenotypingCenter;
+	}
+
+	public String getMetaDataGroup() {
+		return metaDataGroup;
+	}
+
+	public void setMetaDataGroup(String metaDataGroup) {
+		this.metaDataGroup = metaDataGroup;
+	}
+
 	private String zygosity;
 	
 	private String colonyId;
@@ -66,13 +92,7 @@ public class Stats  {
 		this.zygosity = zygosity;
 	}
 
-	public String getMetaData() {
-		return metaData;
-	}
-
-	public void setMetaData(String metaData) {
-		this.metaData = metaData;
-	}
+	
 
 	public String getGeneAccession() {
 		return geneAccession;
@@ -98,13 +118,7 @@ public class Stats  {
 		this.geneSymbol = geneSymbol;
 	}
 
-	public String getCenter() {
-		return center;
-	}
 
-	public void setCenter(String center) {
-		this.center = center;
-	}
 
 	public String getAllele() {
 		return allele;

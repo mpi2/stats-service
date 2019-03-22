@@ -31,7 +31,7 @@ public class StatsDataLoader implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		//comment out this method if we just want to run the rest service and not load the data into the repository
-		loadDataIntoMongo();
+		//loadDataIntoMongo();
 	}
 
 	private void loadDataIntoMongo() {
