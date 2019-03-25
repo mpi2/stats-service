@@ -18,4 +18,11 @@ public class Result {
 		this.details = details;
 	}
 
+	@Override
+	public String toString() {
+		return "Result [vectoroutput=" + vectoroutput + ", details=" + details + "]";
+	}
+	
+	
+
 }

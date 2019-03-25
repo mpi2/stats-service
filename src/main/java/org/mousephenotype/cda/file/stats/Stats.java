@@ -180,8 +180,15 @@ public class Stats  {
 	@Override
 	public String toString() {
 		return "Stats [id=" + id + ", parameterStableId=" + parameterStableId + ", parameterStableName="
-				+ parameterStableName + ", result=" + result + ", headerInfo=" + headerInfo + "]";
+				+ parameterStableName + ", pipelineStableId=" + pipelineStableId + ", allele=" + allele
+				+ ", geneSymbol=" + geneSymbol + ", phenotypingCenter=" + phenotypingCenter + ", geneAccession="
+				+ geneAccession + ", alleleAccession=" + alleleAccession + ", metaDataGroup=" + metaDataGroup
+				+ ", zygosity=" + zygosity + ", colonyId=" + colonyId + ", impressParameterKey=" + impressParameterKey
+				+ ", impressProtocolKey=" + impressProtocolKey + ", result=" + result + ", headerInfo=" + headerInfo
+				+ "]";
 	}
+
+	
 
 	
 

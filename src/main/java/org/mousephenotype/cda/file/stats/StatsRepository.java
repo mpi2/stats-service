@@ -19,18 +19,25 @@ public interface StatsRepository extends MongoRepository<Stats, String> {
 	
 	//http://localhost:8080/stats/search/findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosityAndPhenotypingCenterAndMetaDataGroup?geneAccession=MGI:1914595&alleleAccession=MGI:2159965&piplineStableId=UCD_001&parameterStableId=IMPC_HEM_038_001&zygosity=heterozygote&phenotypingCenter=MARC&allele_accession=MGI:5695973&metaDataGroup=08aa37a898ab923b9ffdbd01c0077040
 	//http://localhost:8080/stats/search/findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosityAndPhenotypingCenterAndMetaDataGroup?geneAccession=MGI:1914595&alleleAccession=MGI:2159965&piplineStableId=IMPC_001&parameterStableId=IMPC_HEM_038_001&zygosity=homozygote&phenotypingCenter=MARC&metaDataGroup=08aa37a898ab923b9ffdbd01c0077040
+//	List<Stats> findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosityAndPhenotypingCenterAndMetaDataGroup(@Param("geneAccession") String geneAccession, @Param("alleleAccession") String alleleAccession, @Param("parameterStableId") String parameterStableId,
+//			@Param("pipelineStableId") String pipelineStableId, @Param("zygosity") String zygosity, @Param("penotypingCenter") String phenotypingCenter, @Param("metaDataGroup") String metaDataGroup);
+//	
+	
 	List<Stats> findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosityAndPhenotypingCenterAndMetaDataGroup(@Param("geneAccession") String geneAccession, @Param("alleleAccession") String alleleAccession, @Param("parameterStableId") String parameterStableId,
-			@Param("pipeineStableId") String pipelineStableId, @Param("zygosity") String zygosity, @Param("penotypingCenter") String phenotypingCenter, @Param("metaDataGroup") String metaDataGroup);
+			@Param("pipelineStableId") String pipelineStableId,  @Param("zygosity") String zygosity, @Param("phenotypingCenter") String phenotypingCenter, @Param("metaDataGroup") String metaDataGroup);
 	
 	
+	//List<Stats> findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableId(@Param("geneAccession") String geneAccession, @Param("alleleAccession") String alleleAccession, @Param("parameterStableId") String parameterStableId);
 	
 	
-	List<Stats> findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosity(@Param("geneSymbol") String geneSymbol, @Param("parameterStableId") String parameterStableId, @Param("pipeineStableId") String pipelineStableId, @Param("zygosity") String zygoisty);
+	//List<Stats> findByGeneAccessionAndAlleleAccessionAndParameterStableIdAndPipelineStableIdAndZygosity(@Param("geneSymbol") String geneSymbol, @Param("parameterStableId") String parameterStableId, @Param("pipeineStableId") String pipelineStableId, @Param("zygosity") String zygoisty);
 	
 	
 	//http://localhost:8080/stats/search/findByGeneSymbolAndParameterStableId?geneSymbol=Arel1&parameterStableId=IMPC_HEM_038_001
 	List<Stats> findByGeneSymbolAndParameterStableId(@Param("geneSymbol") String geneSymbol, @Param("parameterStableId") String parameterStableId);
 	
+	
+	List<Stats> findByGeneAccession(@Param("geneAccession") String geneAccession);
 	//http://localhost:8080/stats/search/findByGeneSymbol?geneSymbol=Arel1
 	List<Stats> findByGeneSymbol(@Param("geneSymbol") String geneSymbol);
 	

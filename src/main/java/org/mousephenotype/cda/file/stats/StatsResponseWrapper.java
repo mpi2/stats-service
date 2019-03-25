@@ -3,12 +3,17 @@ package org.mousephenotype.cda.file.stats;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatsList {
+/**
+ * used to store more information about the list returned e.g. how many potential restuls of the pagination
+ * @author jwarren
+ *
+ */
+public class StatsResponseWrapper {
 
 	
 	private List<Stats> stats;
 	
-	public StatsList() {
+	public StatsResponseWrapper() {
 		stats=new ArrayList<>();
 	}
 
