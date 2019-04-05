@@ -23,6 +23,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import uk.ac.ebi.phenotype.web.dao.FileStatsDao;
+import uk.ac.ebi.phenotype.web.dao.Statistics;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
@@ -72,7 +75,7 @@ public class FileStatsDaoTest {
 
 	@Test
 	public void testGetStatsSummary() {
-		Stats result = fileExperimentDao.getStatsSummary(center, procedure, parameter, colonyId, zygosity, metadata);
+		Statistics result = fileExperimentDao.getStatsSummary(center, procedure, parameter, colonyId, zygosity, metadata);
 	System.out.println("result = "+result);
 	}
 
