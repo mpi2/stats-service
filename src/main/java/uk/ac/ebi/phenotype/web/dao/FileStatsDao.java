@@ -13,7 +13,7 @@
  * language governing permissions and limitations under the
  * License.
  *******************************************************************************/
-package org.mousephenotype.cda.file.stats;
+package uk.ac.ebi.phenotype.web.dao;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +49,7 @@ public class FileStatsDao {
 	private File indexFile;
 	private List<String> succesfulOnly;
 
+	//note need to specify these directories as env variables when running from inside this sub module!!!???
 	@Inject
     public FileStatsDao(@Value("${root_stats_directory}")String rootDataDirectory,@Value("${original_stats_directory}") String originalDirectory) {
         this.rootStatsDirectory = rootDataDirectory;
@@ -58,9 +58,9 @@ public class FileStatsDao {
         
     }
 
-    public Stats getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
+    public Statistics getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
     	String path=this.getFilePathFromIndex(center, procedure, parameter, colonyId, zygosity, metadata);
-    	Stats result=null;
+    	Statistics result=null;
     	if(path.isEmpty()) {
     		System.err.println("no file at that path "+path);
     	}else {
@@ -69,7 +69,7 @@ public class FileStatsDao {
     	return result;
     }
     
-    private Stats readSuccesFile(String path) {
+    private Statistics readSuccesFile(String path) {
     	//need the details section of the json object
     	List<String> lines=null;
     	try (Stream<String> stream = Files.lines(Paths.get(path))) {
@@ -102,7 +102,7 @@ public class FileStatsDao {
 			e.printStackTrace();
 		}
     	
-    	Stats stats=new Stats(value.getResult());
+    	Statistics stats=new Statistics(value.getResult());
     	int sampleGroupSize=value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
     	int sexSize=value.getResult().getDetails().getOriginalSex().size();
     	int responseSize=value.getResult().getDetails().getOriginalResponse().size();
@@ -113,8 +113,9 @@ public class FileStatsDao {
     	return stats;
     }
 
-	private void addDataFromFileHeader(String summaryInfo, Stats stats) {
+	private void addDataFromFileHeader(String summaryInfo, Statistics stats) {
 		String[] summaryFields = summaryInfo.split("\t");
+		stats.setProcedureStableId(summaryFields[2]);
     	stats.setParameterStableId(summaryFields[4]);
     	stats.setParameterStableName(summaryFields[5]);
     	stats.setPhenotypingCenter(summaryFields[6]);
@@ -189,13 +190,13 @@ public class FileStatsDao {
 
 	
 
-	public List<Stats> getAllStatsFromFiles() {
+	public List<Statistics> getAllStatsFromFiles() {
 		
-		List<Stats>statsList=new ArrayList<>();
+		List<Statistics>statsList=new ArrayList<>();
 		for(String path:succesfulOnly) {
 			if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
 				
-				Stats tempStats=readSuccesFile(path);
+				Statistics tempStats=readSuccesFile(path);
 				//watch this as it's a hack to get the points as json objects in a list rather than seperate arrays and so we can store them this way in mongo
 				tempStats.setPoints();
 				statsList.add(tempStats);

@@ -1,4 +1,4 @@
-package org.mousephenotype.cda.file.stats;
+package uk.ac.ebi.phenotype.web.dao;
 
 public class StatsJson {
 

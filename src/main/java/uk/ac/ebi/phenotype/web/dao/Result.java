@@ -1,12 +1,15 @@
-package org.mousephenotype.cda.file.stats;
+package uk.ac.ebi.phenotype.web.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Result {
+//	@JsonIgnore
+//	private  JsonNode vectoroutput;
+	
 	@JsonIgnore
-	private  JsonNode vectoroutput;
+	private  VectorOutput vectoroutput;
 	
 	private  Details details;
 

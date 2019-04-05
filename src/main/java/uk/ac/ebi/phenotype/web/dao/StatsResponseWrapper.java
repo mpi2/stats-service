@@ -1,4 +1,4 @@
-package org.mousephenotype.cda.file.stats;
+package uk.ac.ebi.phenotype.web.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +11,17 @@ import java.util.List;
 public class StatsResponseWrapper {
 
 	
-	private List<Stats> stats;
+	private List<Statistics> stats;
 	
 	public StatsResponseWrapper() {
 		stats=new ArrayList<>();
 	}
 
-	public List<Stats> getStats() {
+	public List<Statistics> getStats() {
 		return stats;
 	}
 
-	public void setStats(List<Stats> stats) {
+	public void setStats(List<Statistics> stats) {
 		this.stats = stats;
 	}
 

@@ -1,4 +1,4 @@
-package org.mousephenotype.cda.file.stats;
+package uk.ac.ebi.phenotype.web.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
