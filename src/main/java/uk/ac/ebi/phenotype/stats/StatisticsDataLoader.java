@@ -39,9 +39,14 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		boolean deleteFirst=false;
 		String center="MARC";
 		String parameter="IMPC_HEM_038_001";
 		////if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+		if(deleteFirst) {
+		System.out.println("deleting all data from mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		statsRepository.deleteAll();
+		}
 		loadDataIntoMongo(center, parameter);
 		System.exit(0);
 	}
@@ -53,10 +58,6 @@ public class StatisticsDataLoader implements CommandLineRunner {
 	}
 	
 	private void saveDataToMongo(List<Statistics>stats) {
-		
-		
-		System.out.println("deleting data from mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		statsRepository.deleteAll();
 		System.out.println("saving data to mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.saveAll(stats);//save in old spring saveall in new spring
 	}
