@@ -190,11 +190,12 @@ public class FileStatsDao {
 
 	
 
-	public List<Statistics> getAllStatsFromFiles() {
+	public List<Statistics> getAllStatsFromFiles(String center, String parameter) {
 		
 		List<Statistics>statsList=new ArrayList<>();
 		for(String path:succesfulOnly) {
-			if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+			//if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+			if(path.contains(center)&& path.contains(parameter)) {
 				
 				Statistics tempStats=readSuccesFile(path);
 				//watch this as it's a hack to get the points as json objects in a list rather than seperate arrays and so we can store them this way in mongo

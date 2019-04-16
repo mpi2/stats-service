@@ -17,13 +17,17 @@ import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 @SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
+	
+//	private String center;
+//	
+//	private String parameter;
+	
 	@Autowired
 	private StatisticsRepository statsRepository;
 	private FileStatsDao statsProvider;
 
 	
 	public static void main(String []args) {
-		System.out.println("running main stats service method in StatsDataLoader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		SpringApplication.run(StatisticsDataLoader.class, args);
 	}
 	
@@ -35,13 +39,15 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//comment out this method if we just want to run the rest service and not load the data into the repository
-		loadDataIntoMongo();
+		String center="MARC";
+		String parameter="IMPC_HEM_038_001";
+		////if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+		loadDataIntoMongo(center, parameter);
 		System.exit(0);
 	}
 
-	private void loadDataIntoMongo() {
-		List<Statistics>stats=statsProvider.getAllStatsFromFiles();
+	private void loadDataIntoMongo(String center, String parameter) {
+		List<Statistics>stats=statsProvider.getAllStatsFromFiles(center, parameter);
 		System.out.println("stats size="+stats.size());
 		this.saveDataToMongo(stats);
 	}
