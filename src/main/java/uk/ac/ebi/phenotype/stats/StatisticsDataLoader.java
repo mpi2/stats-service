@@ -1,4 +1,4 @@
-package uk.ac.ebi.phenotype.web.dao;
+package uk.ac.ebi.phenotype.stats;
 
 import java.util.List;
 
@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
+import uk.ac.ebi.phenotype.stats.dao.Statistics;
+import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 
+@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
 @SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
@@ -23,14 +28,16 @@ public class StatisticsDataLoader implements CommandLineRunner {
 	}
 	
 	@Inject
-    public StatisticsDataLoader(FileStatsDao statsProvider) {
+    public StatisticsDataLoader(FileStatsDao statsProvider, StatisticsRepository statsRepository) {
 		this.statsProvider=statsProvider;
+		this.statsRepository=statsRepository;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		//comment out this method if we just want to run the rest service and not load the data into the repository
 		loadDataIntoMongo();
+		System.exit(0);
 	}
 
 	private void loadDataIntoMongo() {

@@ -13,7 +13,7 @@
  * language governing permissions and limitations under the
  * License.
  *******************************************************************************/
-package uk.ac.ebi.phenotype.web.dao;
+package uk.ac.ebi.phenotype.stats.dao;
 
 import java.io.File;
 import java.io.IOException;

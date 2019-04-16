@@ -23,8 +23,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import uk.ac.ebi.phenotype.web.dao.FileStatsDao;
-import uk.ac.ebi.phenotype.web.dao.Statistics;
+import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
+import uk.ac.ebi.phenotype.stats.dao.Statistics;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

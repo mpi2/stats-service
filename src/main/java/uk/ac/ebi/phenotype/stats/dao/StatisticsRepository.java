@@ -1,11 +1,15 @@
-package uk.ac.ebi.phenotype.web.dao;
+package uk.ac.ebi.phenotype.stats.dao;
 
 import java.util.List;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@SpringBootApplication
 //@RepositoryRestResource(collectionResourceRel = "stats", path = "stats")
 public interface StatisticsRepository extends MongoRepository<Statistics, String> {
 
