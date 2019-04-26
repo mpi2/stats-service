@@ -3,6 +3,9 @@ package uk.ac.ebi.phenotype.stats;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -39,6 +42,23 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		// Parse the command line options
+		OptionParser parser = new OptionParser();
+
+		parser.allowsUnrecognizedOptions();
+		parser.accepts("filename").withRequiredArg().ofType(String.class);
+		OptionSet options = parser.parse(args);
+
+		if ( ! options.has("filename")) {
+			String message = "Missing required command-line parameter 'filename'.";
+			System.out.println(message);
+			throw new RuntimeException(message);
+		}
+		String indexFile = (String) options.valuesOf("filename").get(0);
+
+
+
 		boolean deleteFirst=false;
 		String center="MARC";
 		String parameter="IMPC_HEM_038_001";

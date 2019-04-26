@@ -44,18 +44,18 @@ public class FileStatsDao {
     
     
     private final String rootStatsDirectory;
-   
+
     private final String originalDirectory;//need this to chop off path from the index file for replacement with local root directory!
 	private File indexFile;
 	private List<String> succesfulOnly;
 
 	//note need to specify these directories as env variables when running from inside this sub module!!!???
 	@Inject
-    public FileStatsDao(@Value("${root_stats_directory}")String rootDataDirectory,@Value("${original_stats_directory}") String originalDirectory) {
+    public FileStatsDao(@Value("${root_stats_directory:/data}")String rootDataDirectory,@Value("${original_stats_directory:/data}") String originalDirectory) {
         this.rootStatsDirectory = rootDataDirectory;
         this.originalDirectory=originalDirectory;
         this.readIndexFile();
-        
+
     }
 
     public Statistics getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
@@ -188,7 +188,7 @@ public class FileStatsDao {
 		
 	}
 
-	
+
 
 	public List<Statistics> getAllStatsFromFiles(String center, String parameter) {
 		

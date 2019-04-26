@@ -52,10 +52,10 @@ public class FileStatsDaoTest {
 	static class ContextConfiguration {
 
 		@NotNull
-		@Value("${root_stats_directory}")
+		@Value("${root_stats_directory:/data}")
 		private String rootStatsDirectory;
 		@NotNull
-		@Value("${original_stats_directory}")
+		@Value("${original_stats_directory:/data}")
 		private String originalStatsDirectory;
 
 		@Bean(name = "fileExperimentDao")
