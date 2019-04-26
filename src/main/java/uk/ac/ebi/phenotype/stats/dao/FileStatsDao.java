@@ -69,7 +69,7 @@ public class FileStatsDao {
     	return result;
     }
     
-    private Statistics readSuccesFile(String path) {
+    public Statistics readSuccesFile(String path) {
     	//need the details section of the json object
     	List<String> lines=null;
     	try (Stream<String> stream = Files.lines(Paths.get(path))) {

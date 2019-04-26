@@ -13,8 +13,8 @@ import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.dao.Statistics;
 import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 
-@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
-@SpringBootApplication
+//@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
+//@SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
 	
