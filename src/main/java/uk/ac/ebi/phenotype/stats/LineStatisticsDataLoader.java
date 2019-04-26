@@ -18,7 +18,7 @@ import java.util.List;
 public class LineStatisticsDataLoader implements CommandLineRunner {
 
 
-    @Autowired
+    //@Autowired
     private StatisticsRepository statsRepository;
     private FileStatsDao statsProvider;
 
