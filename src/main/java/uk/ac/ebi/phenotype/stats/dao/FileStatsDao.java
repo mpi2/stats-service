@@ -54,7 +54,7 @@ public class FileStatsDao {
     public FileStatsDao(@Value("${root_stats_directory:/data}")String rootDataDirectory,@Value("${original_stats_directory:/data}") String originalDirectory) {
         this.rootStatsDirectory = rootDataDirectory;
         this.originalDirectory=originalDirectory;
-        this.readIndexFile();
+        //this.readIndexFile();
 
     }
 

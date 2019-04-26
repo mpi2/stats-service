@@ -38,6 +38,7 @@ public class StatisticsDataLoader implements CommandLineRunner {
     public StatisticsDataLoader(FileStatsDao statsProvider, StatisticsRepository statsRepository) {
 		this.statsProvider=statsProvider;
 		this.statsRepository=statsRepository;
+		statsProvider.readIndexFile();
 	}
 
 	@Override
