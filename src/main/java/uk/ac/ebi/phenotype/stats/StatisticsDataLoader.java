@@ -9,7 +9,9 @@ import joptsimple.OptionSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
@@ -31,7 +33,10 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	
 	public static void main(String []args) {
-		SpringApplication.run(StatisticsDataLoader.class, args);
+		new SpringApplicationBuilder(StatisticsDataLoader.class)
+        .web(WebApplicationType.NONE) // .REACTIVE, .SERVLET
+        .run(args);
+		//SpringApplication.run(StatisticsDataLoader.class, args);
 	}
 	
 	@Inject
