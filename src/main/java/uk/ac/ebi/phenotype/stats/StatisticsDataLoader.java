@@ -18,8 +18,8 @@ import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.dao.Statistics;
 import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 
-//@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
-//@SpringBootApplication
+@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
+@SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
 	
@@ -33,6 +33,10 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	
 	public static void main(String []args) {
+		System.out.println("args="+args);
+		for(String arg: args) {
+			System.out.println("arg="+arg);
+		}
 		new SpringApplicationBuilder(StatisticsDataLoader.class)
         .web(WebApplicationType.NONE) // .REACTIVE, .SERVLET
         .run(args);
@@ -48,16 +52,20 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
+		System.out.println("in run args="+args);
+		for(String arg: args) {
+			System.out.println("in run arg="+arg);
+		}
 		// Parse the command line options
 		OptionParser parser = new OptionParser();
 
 		parser.allowsUnrecognizedOptions();
 		parser.accepts("filename").withRequiredArg().ofType(String.class);
 		OptionSet options = parser.parse(args);
+		System.out.println("options="+options);
 
 		if ( ! options.has("filename")) {
-			String message = "Missing required command-line parameter 'filename'.";
+			String message = "Missing required command-line parameter '-filename'.";
 			System.out.println(message);
 			throw new RuntimeException(message);
 		}
