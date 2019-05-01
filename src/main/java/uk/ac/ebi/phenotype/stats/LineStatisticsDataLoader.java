@@ -3,7 +3,9 @@ package uk.ac.ebi.phenotype.stats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.dao.Statistics;
@@ -24,7 +26,11 @@ public class LineStatisticsDataLoader implements CommandLineRunner {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(LineStatisticsDataLoader.class, args);
+
+        new SpringApplicationBuilder(LineStatisticsDataLoader.class)
+            .web(WebApplicationType.NONE) // .REACTIVE, .SERVLET
+            .run(args);
+        //SpringApplication.run(LineStatisticsDataLoader.class, args);
     }
 
     @Inject
