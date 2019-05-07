@@ -39,24 +39,10 @@ public class FileStatsDao {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     //"https://www.ebi.ac.uk/~hamedhm/windowing/DR9.2/jobs/ExtractedPValues/DR9.2_V1/";
-    private static final String indexFilename="Index_V1_DR92.txt";
+    //private static final String indexFilename="Index_V1_DR92.txt";
     private static final String successFileName="output_Successful.tsv";
-    
-    
-    private final String rootStatsDirectory;
-
-    private final String originalDirectory;//need this to chop off path from the index file for replacement with local root directory!
-	private File indexFile;
-	
-
 	//note need to specify these directories as env variables when running from inside this sub module!!!???
-	@Inject
-    public FileStatsDao(@Value("${root_stats_directory:/data}")String rootDataDirectory,@Value("${original_stats_directory:/data}") String originalDirectory) {
-        this.rootStatsDirectory = rootDataDirectory;
-        this.originalDirectory=originalDirectory;
-        //this.readIndexFile();
-
-    }
+	
 
 //    public Statistics getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
 //    	String path=this.getFilePathFromIndex(center, procedure, parameter, colonyId, zygosity, metadata);
@@ -131,6 +117,8 @@ public class FileStatsDao {
     
     /**
      * 
+     * @param rootStatsDirectory2 
+     * @param originalStatDir 
      * @param center
      * @param procedure
      * @param parameter
@@ -151,26 +139,20 @@ public class FileStatsDao {
     
 
     
-	public List<String> readIndexFile() {
-		List<String> succesfulOnly=null;
-		// TODO Auto-generated method stub
-		this.indexFile=new File(rootStatsDirectory+"/"+indexFilename);
-		try (Stream<String> stream = Files.lines(Paths.get(rootStatsDirectory+"/"+indexFilename))) {
+	public List<String> readIndexFile(String indexFilename, String originalStatsDir, String rootStatsDirectory) {
+		List<String> succesfulOnly = null;
+		try (Stream<String> stream = Files.lines(Paths.get(indexFilename))) {
 
-			//stream.forEach(System.out::println);
-			//succesfulOnly=stream.filter(string -> string.endsWith(successFileName)).distinct().collect(Collectors.toList());
-			succesfulOnly=stream
-					.filter(string -> string.endsWith(successFileName))
-					.map(string -> string.replace(originalDirectory, rootStatsDirectory))
-					.distinct().collect(Collectors.toList());//.distinct().collect(Collectors.toList());
-			
-			//succesfulOnly.forEach(System.out::println);
+			succesfulOnly = stream.filter(string -> string.endsWith(successFileName))
+					.map(string -> string.replace(originalStatsDir, rootStatsDirectory)).distinct()
+					.collect(Collectors.toList());// .distinct().collect(Collectors.toList());
+
+			// succesfulOnly.forEach(System.out::println);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return succesfulOnly;
 	}
 

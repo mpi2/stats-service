@@ -59,28 +59,46 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		OptionParser parser = new OptionParser();
 
 		parser.allowsUnrecognizedOptions();
-		parser.accepts("filename").withRequiredArg().ofType(String.class);
+		parser.accepts("index_file_path").withRequiredArg().ofType(String.class);
+		parser.accepts("original_stats_directory").withOptionalArg().ofType(String.class);
+		parser.accepts("root_stats_directory").withOptionalArg().ofType(String.class);
+		parser.accepts("center").withOptionalArg().ofType(String.class);
+		parser.accepts("parameter").withOptionalArg().ofType(String.class);
 		OptionSet options = parser.parse(args);
 		System.out.println("options="+options);
 
-		if ( ! options.has("filename")) {
-			String message = "Missing required command-line parameter '-filename'.";
+		if ( ! options.has("index_file_path")) {
+			String message = "Missing required command-line parameter '-index_file_path'.";
 			System.out.println(message);
 			throw new RuntimeException(message);
 		}
-		String indexFile = (String) options.valuesOf("filename").get(0);
-
+		String indexFilePath = (String) options.valuesOf("index_file_path").get(0);
+		String originalStatDir="";
+		String rootStatsDirectory="";
+		String center="";//"MARC"; if not specified string will contain empty strings so as if not filtered at all by default
+		String parameter="";//"IMPC_HEM_038_001";
+		if ( options.has("original_stats_directory")) {
+			originalStatDir = (String) options.valuesOf("original_stats_directory").get(0);
+		}
+		if ( options.has("root_stats_directory")) {
+			rootStatsDirectory = (String) options.valuesOf("root_stats_directory").get(0);
+		}
+		if ( options.has("center")) {
+			center = (String) options.valuesOf("center").get(0);
+		}
+		if ( options.has("parameter")) {
+			parameter = (String) options.valuesOf("parameter").get(0);
+		}
 
 
 		boolean deleteFirst=true;
-		String center="MARC";
-		String parameter="IMPC_HEM_038_001";
+		
 		////if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
 		if(deleteFirst) {
 		System.out.println("deleting all data from mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.deleteAll();
 		}
-		List<String> successFilesOnly = statsProvider.readIndexFile();
+		List<String> successFilesOnly = statsProvider.readIndexFile(indexFilePath, originalStatDir, rootStatsDirectory);
 		loadDataIntoMongo(center, parameter, successFilesOnly);
 		System.exit(0);
 	}
