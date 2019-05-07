@@ -58,11 +58,6 @@ public class FileStatsDaoTest {
 		@Value("${original_stats_directory:/data}")
 		private String originalStatsDirectory;
 
-		@Bean(name = "fileExperimentDao")
-		FileStatsDao getFileExperimentDao() {
-			return new FileStatsDao(rootStatsDirectory, originalStatsDirectory);
-		}
-
 		@Bean
 		public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
 			return new PropertySourcesPlaceholderConfigurer();
