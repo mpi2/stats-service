@@ -73,11 +73,11 @@ public class FileStatsDaoTest {
 	@Autowired
 	FileStatsDao fileExperimentDao;
 
-	@Test
-	public void testGetStatsSummary() {
-		Statistics result = fileExperimentDao.getStatsSummary(center, procedure, parameter, colonyId, zygosity, metadata);
-	System.out.println("result = "+result);
-	}
+//	@Test
+//	public void testGetStatsSummary() {
+//		Statistics result = fileExperimentDao.getStatsSummary(center, procedure, parameter, colonyId, zygosity, metadata);
+//	System.out.println("result = "+result);
+//	}
 
 //	@Test
 //	public void getFilePath(){
@@ -94,22 +94,22 @@ public class FileStatsDaoTest {
 //		assert(filePath.isEmpty());
 //	}
 	
-	@Test
-	public void readIndexFileTest() {
-		File indexFile=fileExperimentDao.readIndexFile();
-		assert(indexFile.isFile());
-	}
-
-	
-	@Test
-	public void getParameterOptionsForRequest() {
-		List<String> filePaths = fileExperimentDao.getParameterOptionsForRequest(center, parameter, metadata);
-		assert(filePaths.size()>0);
-		filePaths.forEach(blah -> System.out.println(blah));
-		System.out.println("filepaths size="+filePaths.size());
-		
-	}
-	
+//	@Test
+//	public void readIndexFileTest() {
+//		File indexFile=fileExperimentDao.readIndexFile();
+//		assert(indexFile.isFile());
+//	}
+//
+//	
+//	@Test
+//	public void getParameterOptionsForRequest() {
+//		List<String> filePaths = fileExperimentDao.getParameterOptionsForRequest(center, parameter, metadata);
+//		assert(filePaths.size()>0);
+//		filePaths.forEach(blah -> System.out.println(blah));
+//		System.out.println("filepaths size="+filePaths.size());
+//		
+//	}
+//	
 	
 
 
