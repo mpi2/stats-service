@@ -47,7 +47,6 @@ public class StatisticsDataLoader implements CommandLineRunner {
     public StatisticsDataLoader(FileStatsDao statsProvider, StatisticsRepository statsRepository) {
 		this.statsProvider=statsProvider;
 		this.statsRepository=statsRepository;
-		statsProvider.readIndexFile();
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class StatisticsDataLoader implements CommandLineRunner {
 
 
 
-		boolean deleteFirst=false;
+		boolean deleteFirst=true;
 		String center="MARC";
 		String parameter="IMPC_HEM_038_001";
 		////if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
@@ -81,12 +80,13 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		System.out.println("deleting all data from mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.deleteAll();
 		}
-		loadDataIntoMongo(center, parameter);
+		List<String> successFilesOnly = statsProvider.readIndexFile();
+		loadDataIntoMongo(center, parameter, successFilesOnly);
 		System.exit(0);
 	}
 
-	private void loadDataIntoMongo(String center, String parameter) {
-		List<Statistics>stats=statsProvider.getAllStatsFromFiles(center, parameter);
+	private void loadDataIntoMongo(String center, String parameter,List<String> successFilesOnly) {
+		List<Statistics>stats=statsProvider.getAllStatsFromFiles(center, parameter, successFilesOnly);
 		System.out.println("stats size="+stats.size());
 		this.saveDataToMongo(stats);
 	}

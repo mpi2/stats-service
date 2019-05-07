@@ -47,7 +47,7 @@ public class FileStatsDao {
 
     private final String originalDirectory;//need this to chop off path from the index file for replacement with local root directory!
 	private File indexFile;
-	private List<String> succesfulOnly;
+	
 
 	//note need to specify these directories as env variables when running from inside this sub module!!!???
 	@Inject
@@ -58,16 +58,16 @@ public class FileStatsDao {
 
     }
 
-    public Statistics getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
-    	String path=this.getFilePathFromIndex(center, procedure, parameter, colonyId, zygosity, metadata);
-    	Statistics result=null;
-    	if(path.isEmpty()) {
-    		System.err.println("no file at that path "+path);
-    	}else {
-    		result= this.readSuccesFile(path);
-    	}
-    	return result;
-    }
+//    public Statistics getStatsSummary(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
+//    	String path=this.getFilePathFromIndex(center, procedure, parameter, colonyId, zygosity, metadata);
+//    	Statistics result=null;
+//    	if(path.isEmpty()) {
+//    		System.err.println("no file at that path "+path);
+//    	}else {
+//    		result= this.readSuccesFile(path);
+//    	}
+//    	return result;
+//    }
     
     public Statistics readSuccesFile(String path) {
     	//need the details section of the json object
@@ -139,22 +139,20 @@ public class FileStatsDao {
      * @param metadata
      * @return path but empty string if no success file at that path
      */
-    public String getFilePathFromIndex(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
-    	
-    	String pathToFile=rootStatsDirectory+"/"+center+"/"+procedure+"/"+parameter+"/"+colonyId+"/"+zygosity+"/"+metadata+"/"+successFileName;
-    	if(succesfulOnly.contains(pathToFile)) {
-    		return pathToFile;
-    	}
-    	return "";
-    }
+//    public String getFilePathFromIndex(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
+//    	
+//    	String pathToFile=rootStatsDirectory+"/"+center+"/"+procedure+"/"+parameter+"/"+colonyId+"/"+zygosity+"/"+metadata+"/"+successFileName;
+//    	if(succesfulOnly.contains(pathToFile)) {
+//    		return pathToFile;
+//    	}
+//    	return "";
+//    }
 
     
 
-    /**
-     * only public for testing purposes!!
-     * @return
-     */
-	public File readIndexFile() {
+    
+	public List<String> readIndexFile() {
+		List<String> succesfulOnly=null;
 		// TODO Auto-generated method stub
 		this.indexFile=new File(rootStatsDirectory+"/"+indexFilename);
 		try (Stream<String> stream = Files.lines(Paths.get(rootStatsDirectory+"/"+indexFilename))) {
@@ -173,24 +171,24 @@ public class FileStatsDao {
 		}
 		
 		
-		return indexFile;
+		return succesfulOnly;
 	}
 
 
-	public List<String> getParameterOptionsForRequest(String phenotypingCenter, String parameterStableId,
-			String metadataGroup) {
-		
-		Stream<String> filePaths=succesfulOnly.stream();
-		List<String> pathsForRequest = filePaths
-		.filter(string -> string.contains(phenotypingCenter))
-		.filter(string -> string.contains(parameterStableId)).collect(Collectors.toList());
-		return pathsForRequest;
-		
-	}
+//	public List<String> getParameterOptionsForRequest(String phenotypingCenter, String parameterStableId,
+//			String metadataGroup) {
+//		
+//		Stream<String> filePaths=succesfulOnly.stream();
+//		List<String> pathsForRequest = filePaths
+//		.filter(string -> string.contains(phenotypingCenter))
+//		.filter(string -> string.contains(parameterStableId)).collect(Collectors.toList());
+//		return pathsForRequest;
+//		
+//	}
 
 
 
-	public List<Statistics> getAllStatsFromFiles(String center, String parameter) {
+	public List<Statistics> getAllStatsFromFiles(String center, String parameter, List<String> succesfulOnly) {
 		
 		List<Statistics>statsList=new ArrayList<>();
 		for(String path:succesfulOnly) {
