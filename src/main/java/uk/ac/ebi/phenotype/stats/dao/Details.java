@@ -14,6 +14,18 @@ public class Details {
 	@JsonProperty("raw_data_summary_statistics")
 	private RawSummaryStatistics rawDataSummaryStatistics;
 	
+	
+	private ExperimentDetails experimentDetails;
+	
+
+	public ExperimentDetails getExperimentDetails() {
+		return experimentDetails;
+	}
+	
+	@JsonProperty("experiment_details")
+	public void setExperimentDetails(ExperimentDetails experimentDetails) {
+		this.experimentDetails = experimentDetails;
+	}
 
 	private List<String> originalSex;
 	

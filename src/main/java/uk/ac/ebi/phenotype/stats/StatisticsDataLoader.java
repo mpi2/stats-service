@@ -91,7 +91,7 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		}
 
 
-		boolean deleteFirst=false;
+		boolean deleteFirst=true;
 		
 		////if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
 		if(deleteFirst) {
