@@ -33,6 +33,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import uk.ac.ebi.phenotype.stats.model.Statistics;
+import uk.ac.ebi.phenotype.stats.model.StatsJson;
+
 
 @Service
 public class FileStatsDao {

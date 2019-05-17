@@ -1,4 +1,4 @@
-package uk.ac.ebi.phenotype.stats.dao;
+package uk.ac.ebi.phenotype.stats.model;
 
 import javax.annotation.Resource;
 

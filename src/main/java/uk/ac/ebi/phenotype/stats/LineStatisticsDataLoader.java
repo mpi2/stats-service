@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
-import uk.ac.ebi.phenotype.stats.dao.Statistics;
 import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
+import uk.ac.ebi.phenotype.stats.model.Statistics;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
