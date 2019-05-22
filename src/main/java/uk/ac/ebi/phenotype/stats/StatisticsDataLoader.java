@@ -98,7 +98,9 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		System.out.println("deleting all data from mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.deleteAll();
 		}
+		
 		List<String> successFilesOnly = statsProvider.readIndexFile(indexFilePath, originalStatDir, rootStatsDirectory);
+		System.out.println("number of success files in index file="+successFilesOnly.size());
 		loadDataIntoMongo(center, parameter, successFilesOnly);
 		System.exit(0);
 	}
