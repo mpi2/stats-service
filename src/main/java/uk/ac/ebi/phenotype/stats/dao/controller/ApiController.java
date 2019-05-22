@@ -67,36 +67,36 @@ public class ApiController {
 		}
 
 		
-//		if(alleleAccession!=null) {
-//			exampleMatcher.withMatcher(alleleAccession, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setAlleleAccession(alleleAccession);
-//		}
-//		
-//		if(metadataGroup!=null) {
-//			exampleMatcher.withMatcher(metadataGroup, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setMetaDataGroup(metadataGroup);
-//		}
+		if(alleleAccession!=null) {
+			exampleMatcher.withMatcher(alleleAccession, GenericPropertyMatcher::ignoreCase).withIgnoreNullValues();
+			filterStatistics.setAlleleAccession(alleleAccession);
+		}
 		
-//		if(parameterStableId!=null) {
-//			exampleMatcher.withMatcher(parameterStableId, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setParameterStableId(parameterStableId);
-//		}
+		if(metadataGroup!=null) {
+			exampleMatcher.withMatcher(metadataGroup, GenericPropertyMatcher::ignoreCase);
+			filterStatistics.setMetaDataGroup(metadataGroup);
+		}
 		
-//		if(zygosity!=null && zygosity.length>0) {
-//			String zyg=zygosity[0];
-//			exampleMatcher.withMatcher(zyg, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setZygosity(zyg);
-//		}
-//		
-//		if(phenotypingCenter!=null) {
-//			exampleMatcher.withMatcher(phenotypingCenter, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setPhenotypingCenter(phenotypingCenter);
-//		}
-//		
-//		if(pipelineStableId!=null) {
-//			exampleMatcher.withMatcher(pipelineStableId, GenericPropertyMatcher::ignoreCase);
-//			filterStatistics.setPipelineStableId(pipelineStableId);
-//		}
+		if(parameterStableId!=null) {
+			exampleMatcher.withMatcher(parameterStableId, GenericPropertyMatcher::ignoreCase);
+			filterStatistics.setParameterStableId(parameterStableId);
+		}
+		
+		if(zygosity!=null && zygosity.length>0) {
+			String zyg=zygosity[0];
+			exampleMatcher.withMatcher(zyg, GenericPropertyMatcher::ignoreCase);
+			filterStatistics.setZygosity(zyg);
+		}
+	
+		if(phenotypingCenter!=null) {
+			exampleMatcher.withMatcher(phenotypingCenter, GenericPropertyMatcher::ignoreCase);
+			filterStatistics.setPhenotypingCenter(phenotypingCenter);
+		}
+		
+		if(pipelineStableId!=null) {
+			exampleMatcher.withMatcher(pipelineStableId, GenericPropertyMatcher::ignoreCase);
+			filterStatistics.setPipelineStableId(pipelineStableId);
+		}
 		
 		
 		Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
