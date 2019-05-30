@@ -96,7 +96,9 @@ public class FileStatsDao {
     	int sexSize=value.getResult().getDetails().getOriginalSex().size();
     	int responseSize=value.getResult().getDetails().getOriginalResponse().size();
     	int dateOfExperimentSize=value.getResult().getDetails().getOriginalDateOfExperiment().size();
-    	assert(sampleGroupSize==sexSize && sampleGroupSize==responseSize && sampleGroupSize==dateOfExperimentSize);//all these lists should be the same size as refer to points.
+    	if(sampleGroupSize!=sexSize || sampleGroupSize!=responseSize || sampleGroupSize!=dateOfExperimentSize) {
+    		System.err.println("sizes of point data points don't match");
+    	};//all these lists should be the same size as refer to points.
     	
     	addDataFromFileHeader(summaryInfo, stats);
     	return stats;
