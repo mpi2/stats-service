@@ -1,5 +1,6 @@
 package uk.ac.ebi.phenotype.stats;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -105,15 +106,33 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		System.exit(0);
 	}
 
-	private void loadDataIntoMongo(String center, String parameter,List<String> successFilesOnly) {
-		List<Statistics>stats=statsProvider.getAllStatsFromFiles(center, parameter, successFilesOnly);
-		System.out.println("stats size="+stats.size());
-		this.saveDataToMongo(stats);
+	private void loadDataIntoMongo(String center, String parameter, List<String> successFilesOnly) {
+		// lets batch the number of stats objects so that we don't use too much memory
+		// on any given cluster node
+		List<List<String>> smallerLists = chopped(successFilesOnly, 10);
+		for (List<String> subList : smallerLists) {
+			List<Statistics> stats = statsProvider.getAllStatsFromFiles(center, parameter, subList);
+			if (!stats.isEmpty()) {
+				System.out.println("stats size for saving to mongo=" + stats.size());
+				this.saveDataToMongo(stats);
+			}
+		}
 	}
 	
 	private void saveDataToMongo(List<Statistics>stats) {
 		System.out.println("saving data to mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.saveAll(stats);//save in old spring saveall in new spring
+	}
+	
+	static <T> List<List<T>> chopped(List<T> list, final int L) {
+	    List<List<T>> parts = new ArrayList<List<T>>();
+	    final int N = list.size();
+	    for (int i = 0; i < N; i += L) {
+	        parts.add(new ArrayList<T>(
+	            list.subList(i, Math.min(N, i + L)))
+	        );
+	    }
+	    return parts;
 	}
 
 }
