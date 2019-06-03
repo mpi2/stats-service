@@ -111,6 +111,9 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
+			if(listOfStatistics.size()==1) {
+				singleStatistics=listOfStatistics.get(0);
+			}
 
 			if (strain != null && !(listOfStatistics==null ||listOfStatistics.isEmpty())) {// cant do nested filtering in the same way as above so old fashioned filter
 				for (Statistics temp : listOfStatistics) {
@@ -121,7 +124,6 @@ public class ApiController {
 				}
 			} 
 
-			// singleStatistic=statisticsRepository.findByGeneAccession("MGI:2443170");
 			System.out.println("stats size=" + listOfStatistics.size());
 			 if(listOfStatistics.size()>1) {
 			System.err.println("more than one result being returned form repository for singleStatistics request");
