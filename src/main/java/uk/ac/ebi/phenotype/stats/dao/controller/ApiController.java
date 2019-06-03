@@ -48,7 +48,7 @@ public class ApiController {
             @RequestParam(required = false, value = "phenotyping_center") String phenotypingCenter,
             @RequestParam(required = false, value = "pipeline_stable_id") String pipelineStableId,
 			Model model) {
-
+//http://ves-ebi-d1.ebi.ac.uk:8091/api/singleStatistic?accession=MGI:1859162&allele_accession_id=MGI:2159965&parameter_stable_Id=IMPC_CSD_037_001&metadata_group=90a6d0764193bc4243363bcdcc04be6e
 		// http://localhost:8080/api/singleStatistic?accession=MGI:2443170&strain_accession_id=MGI:2159965&allele_accession_id=MGI:2159965&zygosity=homozygote
 		System.out.println("hitting singleStatisics endpoint");
 
@@ -109,10 +109,10 @@ System.out.println("numOfParams="+numOfParams);
 		if(numOfParams>3) {
 			processRequest=true;//only process at the moment if 4 or more parameters otherwise out of memory error occurs
 		}
+		Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
+		System.out.println("example=" + example);
 		if (processRequest) {
-			Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
-
-			System.out.println("example=" + example);
+			
 			listOfStatistics = statisticsRepository.findAll(example);
 
 			if (strain != null) {// cant do nested filtering in the same way as above so old fashioned filter
