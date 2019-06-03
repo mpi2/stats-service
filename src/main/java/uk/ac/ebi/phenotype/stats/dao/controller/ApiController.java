@@ -54,7 +54,7 @@ public class ApiController {
 		System.out.println("hitting singleStatisics endpoint");
 
 		List<Statistics> listOfStatistics = null;
-		Statistics singleStatistics = new Statistics();
+		Statistics singleStatistics = null;
 		Statistics filterStatistics = new Statistics();
 //		Result result=new Result();
 //		Details details=new Details();
@@ -111,21 +111,15 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
-			if(listOfStatistics==null ||listOfStatistics.isEmpty()) {
-				listOfStatistics=new ArrayList<>();
-				listOfStatistics.add(new Statistics());
-			}
 
-			if (strain != null) {// cant do nested filtering in the same way as above so old fashioned filter
+			if (strain != null && !(listOfStatistics==null ||listOfStatistics.isEmpty())) {// cant do nested filtering in the same way as above so old fashioned filter
 				for (Statistics temp : listOfStatistics) {
 					if (temp.getResult().getDetails().getExperimentDetails().getStrainAccessionId()
 							.equalsIgnoreCase(strain)) {
 						singleStatistics = temp;
 					}
 				}
-			} else {
-				singleStatistics = listOfStatistics.get(0);
-			}
+			} 
 
 			// singleStatistic=statisticsRepository.findByGeneAccession("MGI:2443170");
 			System.out.println("stats size=" + listOfStatistics.size());
@@ -133,7 +127,9 @@ public class ApiController {
 			System.err.println("more than one result being returned form repository for singleStatistics request");
 			 }
 	
-			
+			if(singleStatistics==null) {
+				status=HttpStatus.NO_CONTENT;
+			}
 		return new ResponseEntity<Statistics>(singleStatistics, status);
 	}
 	
