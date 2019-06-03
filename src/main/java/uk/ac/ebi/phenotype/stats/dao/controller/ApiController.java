@@ -105,7 +105,7 @@ public class ApiController {
 			filterStatistics.setPipelineStableId(pipelineStableId);
 			numOfParams++;
 		}
-
+System.out.println("numOfParams="+numOfParams);
 		if(numOfParams>3) {
 			processRequest=true;//only process at the moment if 4 or more parameters otherwise out of memory error occurs
 		}
