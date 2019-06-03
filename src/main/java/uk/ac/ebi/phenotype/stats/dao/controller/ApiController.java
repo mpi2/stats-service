@@ -36,9 +36,9 @@ public class ApiController {
 	
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	@RequestMapping("/singleStatistic")
+	@RequestMapping("/stats")
 	@ResponseBody
-	public ResponseEntity<Statistics> getUniqueStatisticResult(
+	public ResponseEntity<List<Statistics>> getUniqueStatisticResult(
             @RequestParam(required = true, value = "accession") String[] accession,
             @RequestParam(required = false, value = "strain_accession_id") String strain,
             @RequestParam(required = false, value = "allele_accession_id") String alleleAccession,
@@ -54,7 +54,7 @@ public class ApiController {
 		System.out.println("hitting singleStatisics endpoint");
 
 		List<Statistics> listOfStatistics = null;
-		Statistics singleStatistics = null;
+		Statistics singleStatistics = new Statistics();
 		Statistics filterStatistics = new Statistics();
 //		Result result=new Result();
 //		Details details=new Details();
@@ -111,28 +111,24 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
-			if(listOfStatistics.size()==1) {
-				singleStatistics=listOfStatistics.get(0);
-			}
+//			if(listOfStatistics.size()==1) {
+//				singleStatistics=listOfStatistics.get(0);
+//			}
 
-			if (strain != null && !(listOfStatistics==null ||listOfStatistics.isEmpty())) {// cant do nested filtering in the same way as above so old fashioned filter
-				for (Statistics temp : listOfStatistics) {
-					if (temp.getResult().getDetails().getExperimentDetails().getStrainAccessionId()
-							.equalsIgnoreCase(strain)) {
-						singleStatistics = temp;
-					}
-				}
-			} 
+//			if (strain != null && !(listOfStatistics==null ||listOfStatistics.isEmpty())) {// cant do nested filtering in the same way as above so old fashioned filter
+//				for (Statistics temp : listOfStatistics) {
+//					if (temp.getResult().getDetails().getExperimentDetails().getStrainAccessionId()
+//							.equalsIgnoreCase(strain)) {
+//						singleStatistics = temp;
+//					}
+//				}
+//			} 
 
 			System.out.println("stats size=" + listOfStatistics.size());
 			 if(listOfStatistics.size()>1) {
 			System.err.println("more than one result being returned form repository for singleStatistics request");
 			 }
-	
-			if(singleStatistics==null) {
-				status=HttpStatus.NO_CONTENT;
-			}
-		return new ResponseEntity<Statistics>(singleStatistics, status);
+		return new ResponseEntity<List<Statistics>>(listOfStatistics, status);
 	}
 	
 
