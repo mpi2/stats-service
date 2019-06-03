@@ -107,7 +107,7 @@ public class ApiController {
 		Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
 		System.out.println("example=" + example);
 		System.out.println("numOfParams="+numOfParams);
-		if (numOfParams>3) {
+		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
 
@@ -127,10 +127,8 @@ public class ApiController {
 			 if(listOfStatistics.size()>1) {
 			System.err.println("more than one result being returned form repository for singleStatistics request");
 			 }
-		}
-			else {
-				status = HttpStatus.NOT_ACCEPTABLE;
-		}
+	
+			
 		return new ResponseEntity<Statistics>(singleStatistics, status);
 	}
 	
