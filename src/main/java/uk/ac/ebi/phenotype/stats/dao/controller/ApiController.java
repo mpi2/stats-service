@@ -134,7 +134,7 @@ public class ApiController {
 			else {
 				status = HttpStatus.NOT_ACCEPTABLE;
 		}
-		return new ResponseEntity<Statistics>(singleStatistics, HttpStatus.OK);
+		return new ResponseEntity<Statistics>(singleStatistics, status);
 	}
 	
 
