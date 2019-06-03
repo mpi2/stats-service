@@ -2,6 +2,7 @@ package uk.ac.ebi.phenotype.stats.dao.controller;
 
 import static org.springframework.web.bind.annotation.ValueConstants.DEFAULT_NONE;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -110,6 +111,10 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
+			if(listOfStatistics==null ||listOfStatistics.isEmpty()) {
+				listOfStatistics=new ArrayList<>();
+				listOfStatistics.add(new Statistics());
+			}
 
 			if (strain != null) {// cant do nested filtering in the same way as above so old fashioned filter
 				for (Statistics temp : listOfStatistics) {
