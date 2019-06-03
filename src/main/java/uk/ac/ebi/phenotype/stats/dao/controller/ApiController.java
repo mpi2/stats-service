@@ -4,7 +4,6 @@ import static org.springframework.web.bind.annotation.ValueConstants.DEFAULT_NON
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -24,31 +23,27 @@ import uk.ac.ebi.phenotype.stats.model.ExperimentDetails;
 import uk.ac.ebi.phenotype.stats.model.Result;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 
-
-
 @RequestMapping(value = "/api")
 @RestController
 public class ApiController {
-	
+
 	@Autowired
 	StatisticsRepository statisticsRepository;
-	
-	
+
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping("/singleStatistic")
 	@ResponseBody
 	public ResponseEntity<Statistics> getUniqueStatisticResult(
-            @RequestParam(required = false, value = "accession") String[] accession,
-            @RequestParam(required = false, value = "strain_accession_id") String strain,
-            @RequestParam(required = false, value = "allele_accession_id") String alleleAccession,
-            @RequestParam(required = false, value = "metadata_group", defaultValue = DEFAULT_NONE) String metadataGroup,
-            @RequestParam(required = false, value = "parameter_stable_id") String parameterStableId,
-            //@RequestParam(required = false, value = "gender") String[] gender,
-            @RequestParam(required = false, value = "zygosity") String[] zygosity,
-            @RequestParam(required = false, value = "phenotyping_center") String phenotypingCenter,
-            @RequestParam(required = false, value = "pipeline_stable_id") String pipelineStableId,
-			Model model) {
-		//http://ves-ebi-d1.ebi.ac.uk:8091/api/singleStatistic?accession=MGI:1859162&allele_accession_id=MGI:2159965&parameter_stable_id=IMPC_CSD_037_001&metadata_group=90a6d0764193bc4243363bcdcc04be6e
+			@RequestParam(required = false, value = "accession") String[] accession,
+			@RequestParam(required = false, value = "strain_accession_id") String strain,
+			@RequestParam(required = false, value = "allele_accession_id") String alleleAccession,
+			@RequestParam(required = false, value = "metadata_group", defaultValue = DEFAULT_NONE) String metadataGroup,
+			@RequestParam(required = false, value = "parameter_stable_id") String parameterStableId,
+			// @RequestParam(required = false, value = "gender") String[] gender,
+			@RequestParam(required = false, value = "zygosity") String[] zygosity,
+			@RequestParam(required = false, value = "phenotyping_center") String phenotypingCenter,
+			@RequestParam(required = false, value = "pipeline_stable_id") String pipelineStableId, Model model) {
+		// http://ves-ebi-d1.ebi.ac.uk:8091/api/singleStatistic?accession=MGI:1859162&allele_accession_id=MGI:2159965&parameter_stable_id=IMPC_CSD_037_001&metadata_group=90a6d0764193bc4243363bcdcc04be6e
 		// http://localhost:8080/api/singleStatistic?accession=MGI:2443170&strain_accession_id=MGI:2159965&allele_accession_id=MGI:2159965&zygosity=homozygote
 		System.out.println("hitting singleStatisics endpoint");
 
@@ -61,18 +56,23 @@ public class ApiController {
 
 		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll().withIgnoreCase().withIgnoreNullValues();
 		int numOfParams = 0;
-		boolean processRequest = false;
-		HttpStatus status=HttpStatus.ACCEPTED;
+		Boolean processRequest = null;
+		HttpStatus status = HttpStatus.ACCEPTED;
 		if (accession != null) {
 			exampleMatcher.withMatcher(accession[0], GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setGeneAccession(accession[0]);
 			numOfParams++;
+		} else {
+			processRequest = new Boolean(false);
 		}
 
 		if (alleleAccession != null) {
 			exampleMatcher.withMatcher(alleleAccession, GenericPropertyMatcher::ignoreCase).withIgnoreNullValues();
 			filterStatistics.setAlleleAccession(alleleAccession);
 			numOfParams++;
+			
+		}else {
+			processRequest = new Boolean(false);
 		}
 
 		if (metadataGroup != null) {
@@ -105,14 +105,15 @@ public class ApiController {
 			filterStatistics.setPipelineStableId(pipelineStableId);
 			numOfParams++;
 		}
-System.out.println("numOfParams="+numOfParams);
-		if(numOfParams>3) {
-			processRequest=true;//only process at the moment if 4 or more parameters otherwise out of memory error occurs
+		System.out.println("numOfParams=" + numOfParams);
+		if (numOfParams > 3 && processRequest != null) {
+			processRequest = true;// only process at the moment if 4 or more parameters and 2 of these are
+									// accession and parameter otherwise out of memory error occurs
 		}
 		Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
 		System.out.println("example=" + example);
 		if (processRequest) {
-			
+
 			listOfStatistics = statisticsRepository.findAll(example);
 
 			if (strain != null) {// cant do nested filtering in the same way as above so old fashioned filter
@@ -128,15 +129,13 @@ System.out.println("numOfParams="+numOfParams);
 
 			// singleStatistic=statisticsRepository.findByGeneAccession("MGI:2443170");
 			System.out.println("stats size=" + listOfStatistics.size());
-			 if(listOfStatistics.size()>1) {
-			System.err.println("more than one result being returned form repository for singleStatistics request");
-			 }
-		}
-			else {
-				status = HttpStatus.NOT_ACCEPTABLE;
+			if (listOfStatistics.size() > 1) {
+				System.err.println("more than one result being returned form repository for singleStatistics request");
+			}
+		} else {
+			status = HttpStatus.NOT_ACCEPTABLE;
 		}
 		return new ResponseEntity<Statistics>(singleStatistics, status);
 	}
-	
 
 }
