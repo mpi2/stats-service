@@ -47,81 +47,95 @@ public class ApiController {
             @RequestParam(required = false, value = "zygosity") String[] zygosity,
             @RequestParam(required = false, value = "phenotyping_center") String phenotypingCenter,
             @RequestParam(required = false, value = "pipeline_stable_id") String pipelineStableId,
-            Model model) {
-		
-		//http://localhost:8080/api/singleStatistic?accession=MGI:2443170&strain_accession_id=MGI:2159965&allele_accession_id=MGI:2159965&zygosity=homozygote
+			Model model) {
+
+		// http://localhost:8080/api/singleStatistic?accession=MGI:2443170&strain_accession_id=MGI:2159965&allele_accession_id=MGI:2159965&zygosity=homozygote
 		System.out.println("hitting singleStatisics endpoint");
-		
-		List<Statistics> listOfStatistics=null;
-		Statistics singleStatistics=new Statistics();
-		Statistics filterStatistics=new Statistics();
+
+		List<Statistics> listOfStatistics = null;
+		Statistics singleStatistics = new Statistics();
+		Statistics filterStatistics = new Statistics();
 //		Result result=new Result();
 //		Details details=new Details();
 //		ExperimentDetails experimentDetails=new ExperimentDetails();
-		
-		
+
 		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll().withIgnoreCase().withIgnoreNullValues();
-		if(accession!=null) {
+		int numOfParams = 0;
+		boolean processRequest = false;
+		HttpStatus status=HttpStatus.ACCEPTED;
+		if (accession != null) {
 			exampleMatcher.withMatcher(accession[0], GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setGeneAccession(accession[0]);
+			numOfParams++;
 		}
 
-		
-		if(alleleAccession!=null) {
+		if (alleleAccession != null) {
 			exampleMatcher.withMatcher(alleleAccession, GenericPropertyMatcher::ignoreCase).withIgnoreNullValues();
 			filterStatistics.setAlleleAccession(alleleAccession);
+			numOfParams++;
 		}
-		
-		if(metadataGroup!=null) {
+
+		if (metadataGroup != null) {
 			exampleMatcher.withMatcher(metadataGroup, GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setMetaDataGroup(metadataGroup);
+			numOfParams++;
 		}
-		
-		if(parameterStableId!=null) {
+
+		if (parameterStableId != null) {
 			exampleMatcher.withMatcher(parameterStableId, GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setParameterStableId(parameterStableId);
+			numOfParams++;
 		}
-		
-		if(zygosity!=null && zygosity.length>0) {
-			String zyg=zygosity[0];
+
+		if (zygosity != null && zygosity.length > 0) {
+			String zyg = zygosity[0];
 			exampleMatcher.withMatcher(zyg, GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setZygosity(zyg);
+			numOfParams++;
 		}
-	
-		if(phenotypingCenter!=null) {
+
+		if (phenotypingCenter != null) {
 			exampleMatcher.withMatcher(phenotypingCenter, GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setPhenotypingCenter(phenotypingCenter);
+			numOfParams++;
 		}
-		
-		if(pipelineStableId!=null) {
+
+		if (pipelineStableId != null) {
 			exampleMatcher.withMatcher(pipelineStableId, GenericPropertyMatcher::ignoreCase);
 			filterStatistics.setPipelineStableId(pipelineStableId);
+			numOfParams++;
 		}
-		
-		
-		Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
-		
-		System.out.println("example="+example);
-		listOfStatistics=statisticsRepository.findAll(example);
-		
-		if(strain!=null) {//cant do nested filtering in the same way as above so old fashioned filter
-			for(Statistics temp:listOfStatistics) {
-				if(temp.getResult().getDetails().getExperimentDetails().getStrainAccessionId().equalsIgnoreCase(strain)) {
-					singleStatistics=temp;
+
+		if(numOfParams>3) {
+			processRequest=true;//only process at the moment if 4 or more parameters otherwise out of memory error occurs
+		}
+		if (processRequest) {
+			Example<Statistics> example = Example.of(filterStatistics, exampleMatcher);
+
+			System.out.println("example=" + example);
+			listOfStatistics = statisticsRepository.findAll(example);
+
+			if (strain != null) {// cant do nested filtering in the same way as above so old fashioned filter
+				for (Statistics temp : listOfStatistics) {
+					if (temp.getResult().getDetails().getExperimentDetails().getStrainAccessionId()
+							.equalsIgnoreCase(strain)) {
+						singleStatistics = temp;
+					}
 				}
+			} else {
+				singleStatistics = listOfStatistics.get(0);
 			}
-		}else {
-			singleStatistics=listOfStatistics.get(0);
-		}
-		
-		//singleStatistic=statisticsRepository.findByGeneAccession("MGI:2443170");
-		System.out.println("stats size="+listOfStatistics.size());
-		if(listOfStatistics.size()>1) {
+
+			// singleStatistic=statisticsRepository.findByGeneAccession("MGI:2443170");
+			System.out.println("stats size=" + listOfStatistics.size());
+			// if(listOfStatistics.size()>1) {
 			System.err.println("more than one result being returned form repository for singleStatistics request");
 		}
-			return new ResponseEntity<Statistics>(singleStatistics, HttpStatus.OK);
+			else {
+				status = HttpStatus.NOT_ACCEPTABLE;
 		}
-	
+		return new ResponseEntity<Statistics>(singleStatistics, HttpStatus.OK);
+	}
 	
 
 }
