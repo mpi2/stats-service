@@ -49,7 +49,7 @@ public class ApiController {
             @RequestParam(required = false, value = "phenotyping_center") String phenotypingCenter,
             @RequestParam(required = false, value = "pipeline_stable_id") String pipelineStableId,
 			Model model) {
-		//http://ves-ebi-d1.ebi.ac.uk:8091/api/singleStatistic?accession=MGI:1859162&allele_accession_id=MGI:2159965&parameter_stable_id=IMPC_CSD_037_001&metadata_group=90a6d0764193bc4243363bcdcc04be6e
+		//http://ves-ebi-d1.ebi.ac.uk:8091/api/stats?accession=MGI:104874&parameter_stable_id=ESLIM_009_001_702&pipeline_stable_id=ESLIM_002
 		// http://localhost:8080/api/singleStatistic?accession=MGI:2443170&strain_accession_id=MGI:2159965&allele_accession_id=MGI:2159965&zygosity=homozygote
 		System.out.println("hitting singleStatisics endpoint");
 
