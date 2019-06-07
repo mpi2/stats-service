@@ -73,6 +73,9 @@ public class FileStatsDao {
     	System.out.println(sections.length);
     	String summaryInfo=sections[0].replace("{", "");//remove useless { on the end!!
     	String json="{\"result\""+sections[1];
+    	//we currently have {} to represent NA but java doesn't like it as it thinks it should be an object
+    	//so we need to replace all {} with the string null
+    	String json2=json.replace("{}", "null");
     	System.out.println("summaryInfo="+summaryInfo);
     	
     	
@@ -83,7 +86,7 @@ public class FileStatsDao {
     	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     	StatsJson value =null;
     	try {
-    		value = mapper.readValue(json , StatsJson.class);
+    		value = mapper.readValue(json2 , StatsJson.class);
     		//System.out.println(value.getResult().getDetails().getResponseType());
     		//System.out.println(value.getResult().getDetails());
 		} catch (IOException e) {

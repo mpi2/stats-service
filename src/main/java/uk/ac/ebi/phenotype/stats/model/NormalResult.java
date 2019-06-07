@@ -321,11 +321,11 @@ public class NormalResult {
 		this.transformation = transformation;
 	}
 
-	public String getAdditionalInformation() {
+	public AdditionalInformation getAdditionalInformation() {
 		return additionalInformation;
 	}
 
-	public void setAdditionalInformation(String additionalInformation) {
+	public void setAdditionalInformation(AdditionalInformation additionalInformation) {
 		this.additionalInformation = additionalInformation;
 	}
 
@@ -363,8 +363,9 @@ public class NormalResult {
 	private String classificationTag;// : "If phenotype is significant - both sexes equally",
 	@JsonProperty("transformation")
 	private String transformation;// : "lambda=NA, scaleShift=NA, transformed=FALSE, code=0",
+	
 	@JsonProperty("additional_information")
-	private String additionalInformation;// : {
+	private AdditionalInformation additionalInformation;// : {
 	@JsonProperty("gender_included_in_analysis")
 	private String genederIndcludedInAnalysis;// : "Both sexes included",
 	@JsonProperty("multibatch_in_analysis")
