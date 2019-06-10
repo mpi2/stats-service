@@ -53,7 +53,9 @@ public class LineStatisticsDataLoader implements CommandLineRunner {
 
     private void loadDataIntoMongo(String filePath) {
         Statistics tempStats = statsProvider.readSuccesFile(filePath);
+        if(tempStats!=null) {
         statsRepository.save(tempStats);
+        }
     }
 
 

@@ -73,9 +73,16 @@ public class FileStatsDao {
     	System.out.println(sections.length);
     	String summaryInfo=sections[0].replace("{", "");//remove useless { on the end!!
     	String json="{\"result\""+sections[1];
+    	//"observation_type": "unidimensional"
+    	//test if unidimensional and discard if not as we want numbers not strings
+    	if(!json.contains("unidimensional")) {
+    		return null;
+    	}
     	//we currently have {} to represent NA but java doesn't like it as it thinks it should be an object
     	//so we need to replace all {} with the string null
     	String json2=json.replace("{}", "null");
+    	
+    	
     	System.out.println("summaryInfo="+summaryInfo);
     	
     	
@@ -179,21 +186,24 @@ public class FileStatsDao {
 
 
 	public List<Statistics> getAllStatsFromFiles(String center, String parameter, List<String> succesfulOnly) {
-		
-		List<Statistics>statsList=new ArrayList<>();
-		for(String path:succesfulOnly) {
-			//if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
-			if(path.contains(center)&& path.contains(parameter)) {
-				
-				Statistics tempStats=readSuccesFile(path);
-				//watch this as it's a hack to get the points as json objects in a list rather than seperate arrays and so we can store them this way in mongo
-				tempStats.setPoints();
-				statsList.add(tempStats);
+
+		List<Statistics> statsList = new ArrayList<>();
+		for (String path : succesfulOnly) {
+			// if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+			if (path.contains(center) && path.contains(parameter)) {
+
+				Statistics tempStats = readSuccesFile(path);
+				// watch this as it's a hack to get the points as json objects in a list rather
+				// than seperate arrays and so we can store them this way in mongo
+				if (tempStats != null) {
+					tempStats.setPoints();
+					statsList.add(tempStats);
+				}
 			}
-			
+
 		}
 		return statsList;
-		
+
 	}
 
     

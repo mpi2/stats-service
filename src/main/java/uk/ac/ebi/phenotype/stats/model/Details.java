@@ -14,7 +14,9 @@ public class Details {
 	@JsonProperty("raw_data_summary_statistics")
 	private RawSummaryStatistics rawDataSummaryStatistics;
 	
-	
+   @JsonProperty("observation_type")//: "unidimensional")
+	private String observationType;
+   
 	private ExperimentDetails experimentDetails;
 	
 
@@ -27,9 +29,10 @@ public class Details {
 		this.experimentDetails = experimentDetails;
 	}
 
+	@JsonProperty("original_sex")
 	private List<String> originalSex;
 	
-	
+	@JsonProperty("original_biological_sample_group")
 	private List<String> originalBiologicalSampleGroup;
 	
 	
@@ -63,7 +66,7 @@ public class Details {
 		return originalSex;
 	}
 	
-	@JsonProperty("original_sex")
+	
 	public void setOriginalSex(List<String> originalSex) {
 		this.originalSex = originalSex;
 	}
@@ -73,7 +76,7 @@ public class Details {
 		return originalBiologicalSampleGroup;
 	}
 	
-	@JsonProperty("original_biological_sample_group")
+	
 	public void setOriginalBiologicalSampleGroup(List<String> originalBiologicalSampleGroup) {
 		this.originalBiologicalSampleGroup = originalBiologicalSampleGroup;
 	}
