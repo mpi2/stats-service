@@ -28,13 +28,13 @@ public class NormalResult {
 	private String genotypePercentageChange;// : "Female: -32.4272586778729%, Male: -32.4272586778729%",
 
 	@JsonProperty("sex_estimate")
-	private Double sexEstimate;// : {},
+	private String sexEstimate;// : {},
 	@JsonProperty("sex_standard_error")
 	private Double sexStandardError;
 	@JsonProperty("sex_p_val")
 	private Double sexPValue;
 	@JsonProperty("weight_estimate")
-	private Double weightEstimate;
+	private String weightEstimate;
 	@JsonProperty("weight_standard_error")
 	private Double weightStandardError;
 	@JsonProperty("weight_p_val")
@@ -52,7 +52,7 @@ public class NormalResult {
 	@JsonProperty("rotated_residuals_normality_test")
 	private Double rotatedResidualsNormalTest;// : 7.37e-10,
 	@JsonProperty("intercept_estimate")
-	private Double interceptEstimate;// : 0.0442470730062141,
+	private String interceptEstimate;// : 0.0442470730062141,
 	@JsonProperty("intercept_standard_error")
 	private Double interceptStandardError;// : 0.0036142897908856,
 	@JsonProperty("interaction_included")
@@ -129,11 +129,11 @@ public class NormalResult {
 		this.genotypePercentageChange = genotypePercentageChange;
 	}
 
-	public Double getSexEstimate() {
+	public String getSexEstimate() {
 		return sexEstimate;
 	}
 
-	public void setSexEstimate(Double sexEstimate) {
+	public void setSexEstimate(String sexEstimate) {
 		this.sexEstimate = sexEstimate;
 	}
 
@@ -153,11 +153,11 @@ public class NormalResult {
 		this.sexPValue = sexPValue;
 	}
 
-	public Double getWeightEstimate() {
+	public String getWeightEstimate() {
 		return weightEstimate;
 	}
 
-	public void setWeightEstimate(Double weightEstimate) {
+	public void setWeightEstimate(String weightEstimate) {
 		this.weightEstimate = weightEstimate;
 	}
 
@@ -225,11 +225,11 @@ public class NormalResult {
 		this.rotatedResidualsNormalTest = rotatedResidualsNormalTest;
 	}
 
-	public Double getInterceptEstimate() {
+	public String getInterceptEstimate() {
 		return interceptEstimate;
 	}
 
-	public void setInterceptEstimate(Double interceptEstimate) {
+	public void setInterceptEstimate(String interceptEstimate) {
 		this.interceptEstimate = interceptEstimate;
 	}
 
