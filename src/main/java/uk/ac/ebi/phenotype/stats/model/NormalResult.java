@@ -18,7 +18,7 @@ public class NormalResult {
 	@JsonProperty("genotype_contribution")
 	private Double genotypeContribution;// : 0.618217417150485,
 	@JsonProperty("genotype_estimate")
-	private Double genotypeEstimate;// : -0.0142470730062138,
+	private String genotypeEstimate;// : -0.0142470730062138, is a percentage in some cases??
 	@JsonProperty("genotype_standard_error")
 	private Double genotypeStandardError;// : 0.0292248626248843,
 	@JsonProperty("genotype_p_val")
@@ -97,11 +97,11 @@ public class NormalResult {
 		this.genotypeContribution = genotypeContribution;
 	}
 
-	public Double getGenotypeEstimate() {
+	public String getGenotypeEstimate() {
 		return genotypeEstimate;
 	}
 
-	public void setGenotypeEstimate(Double genotypeEstimate) {
+	public void setGenotypeEstimate(String genotypeEstimate) {
 		this.genotypeEstimate = genotypeEstimate;
 	}
 
