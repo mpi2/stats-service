@@ -52,7 +52,13 @@ public class LineStatisticsDataLoader implements CommandLineRunner {
     }
 
     private void loadDataIntoMongo(String filePath) {
-        Statistics tempStats = statsProvider.readSuccesFile(filePath);
+        Statistics tempStats=null;
+		try {
+			tempStats = statsProvider.readSuccesFile(filePath);
+		} catch (Exception e) {
+			// print the exception but continue to run...
+			e.printStackTrace();
+		}
         if(tempStats!=null) {
         statsRepository.save(tempStats);
         }
