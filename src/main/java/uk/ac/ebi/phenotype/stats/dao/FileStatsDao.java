@@ -76,7 +76,7 @@ public class FileStatsDao {
     	//"observation_type": "unidimensional"
     	//test if unidimensional and discard if not as we want numbers not strings
     	if(!json.contains("unidimensional")) {
-    		System.out.println("not a unidimensional restul so returning null");
+    		System.out.println("not a unidimensional result so returning null");
     		return null;
     	}
     	//we currently have {} to represent NA but java doesn't like it as it thinks it should be an object
