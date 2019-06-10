@@ -22,7 +22,7 @@ public class NormalResult {
 	@JsonProperty("genotype_standard_error")
 	private Double genotypeStandardError;// : 0.0292248626248843,
 	@JsonProperty("genotype_p_val")
-	private Double genotypePValue;// : 0.626780054354097,
+	private String genotypePValue;// : 0.626780054354097,
 
 	@JsonProperty("genotype_percentage_change")
 	private String genotypePercentageChange;// : "Female: -32.4272586778729%, Male: -32.4272586778729%",
@@ -113,11 +113,11 @@ public class NormalResult {
 		this.genotypeStandardError = genotypeStandardError;
 	}
 
-	public Double getGenotypePValue() {
+	public String getGenotypePValue() {
 		return genotypePValue;
 	}
 
-	public void setGenotypePValue(Double genotypePValue) {
+	public void setGenotypePValue(String genotypePValue) {
 		this.genotypePValue = genotypePValue;
 	}
 
