@@ -257,11 +257,11 @@ public class NormalResult {
 		this.interactionPVal = interactionPVal;
 	}
 
-	public Double getSexFvkoEstimate() {
+	public String getSexFvkoEstimate() {
 		return sexFvkoEstimate;
 	}
 
-	public void setSexFvkoEstimate(Double sexFvkoEstimate) {
+	public void setSexFvkoEstimate(String sexFvkoEstimate) {
 		this.sexFvkoEstimate = sexFvkoEstimate;
 	}
 
@@ -281,11 +281,11 @@ public class NormalResult {
 		this.sexFvkoPVal = sexFvkoPVal;
 	}
 
-	public Double getSexMykoEstimate() {
+	public String getSexMykoEstimate() {
 		return sexMykoEstimate;
 	}
 
-	public void setSexMykoEstimate(Double sexMykoEstimate) {
+	public void setSexMykoEstimate(String sexMykoEstimate) {
 		this.sexMykoEstimate = sexMykoEstimate;
 	}
 
@@ -348,13 +348,13 @@ public class NormalResult {
 	@JsonProperty("interaction_p_val")
 	private Double interactionPVal;// : 0.623132324183186,
 	@JsonProperty("sex_fvko_estimate")
-	private Double sexFvkoEstimate;// : {},
+	private String sexFvkoEstimate;// : {},
 	@JsonProperty("sex_fvko_standard_error")
 	private Double sexFvkoStandardError;// : {},
 	@JsonProperty("sex_fvko_p_val")
 	private Double sexFvkoPVal;// : {},
 	@JsonProperty("sex_mvko_estimate")
-	private Double sexMykoEstimate;// : {},
+	private String sexMykoEstimate;// : {},
 	@JsonProperty("sex_mvko_standard_error")
 	private Double sexMvkoStandardError;// : {},
 	@JsonProperty("sex_mvko_p_val")
