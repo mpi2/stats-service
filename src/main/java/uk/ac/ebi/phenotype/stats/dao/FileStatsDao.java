@@ -92,6 +92,7 @@ public class FileStatsDao {
     	
     	ObjectMapper mapper = new ObjectMapper();
     	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    	mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
     	StatsJson value =null;
     	try {
     		value = mapper.readValue(json2 , StatsJson.class);
