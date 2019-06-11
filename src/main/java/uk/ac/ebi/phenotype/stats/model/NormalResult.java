@@ -249,11 +249,11 @@ public class NormalResult {
 		this.interactionIncluded = interactionIncluded;
 	}
 
-	public Double getInteractionPVal() {
+	public String getInteractionPVal() {
 		return interactionPVal;
 	}
 
-	public void setInteractionPVal(Double interactionPVal) {
+	public void setInteractionPVal(String interactionPVal) {
 		this.interactionPVal = interactionPVal;
 	}
 
@@ -289,19 +289,19 @@ public class NormalResult {
 		this.sexMykoEstimate = sexMykoEstimate;
 	}
 
-	public Double getSexMvkoStandardError() {
+	public String getSexMvkoStandardError() {
 		return sexMvkoStandardError;
 	}
 
-	public void setSexMvkoStandardError(Double sexMvkoStandardError) {
+	public void setSexMvkoStandardError(String sexMvkoStandardError) {
 		this.sexMvkoStandardError = sexMvkoStandardError;
 	}
 
-	public Double getSexMvkoPVal() {
+	public String getSexMvkoPVal() {
 		return sexMvkoPVal;
 	}
 
-	public void setSexMvkoPVal(Double sexMvkoPVal) {
+	public void setSexMvkoPVal(String sexMvkoPVal) {
 		this.sexMvkoPVal = sexMvkoPVal;
 	}
 
@@ -346,7 +346,7 @@ public class NormalResult {
 	}
 
 	@JsonProperty("interaction_p_val")
-	private Double interactionPVal;// : 0.623132324183186,
+	private String interactionPVal;// : 0.623132324183186,
 	@JsonProperty("sex_fvko_estimate")
 	private String sexFvkoEstimate;// : {},
 	@JsonProperty("sex_fvko_standard_error")
@@ -356,9 +356,9 @@ public class NormalResult {
 	@JsonProperty("sex_mvko_estimate")
 	private String sexMykoEstimate;// : {},
 	@JsonProperty("sex_mvko_standard_error")
-	private Double sexMvkoStandardError;// : {},
+	private String sexMvkoStandardError;// : {},
 	@JsonProperty("sex_mvko_p_val")
-	private Double sexMvkoPVal;// : {},
+	private String sexMvkoPVal;// : {},
 	@JsonProperty("classification_tag")
 	private String classificationTag;// : "If phenotype is significant - both sexes equally",
 	@JsonProperty("transformation")
