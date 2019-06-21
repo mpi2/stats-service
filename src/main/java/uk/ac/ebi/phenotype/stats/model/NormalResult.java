@@ -18,7 +18,7 @@ public class NormalResult {
 	@JsonProperty("genotype_contribution")
 	private GenotypeContribution genotypeContribution;// : 0.618217417150485,
 	@JsonProperty("genotype_estimate")
-	private String genotypeEstimate;// : -0.0142470730062138,
+	private GenotypeEstimate genotypeEstimate;// : -0.0142470730062138,
 	@JsonProperty("genotype_standard_error")
 	private Double genotypeStandardError;// : 0.0292248626248843,
 	@JsonProperty("genotype_p_val")
@@ -97,11 +97,11 @@ public class NormalResult {
 		this.genotypeContribution = genotypeContribution;
 	}
 
-	public String getGenotypeEstimate() {
+	public GenotypeEstimate getGenotypeEstimate() {
 		return genotypeEstimate;
 	}
 
-	public void setGenotypeEstimate(String genotypeEstimate) {
+	public void setGenotypeEstimate(GenotypeEstimate genotypeEstimate) {
 		this.genotypeEstimate = genotypeEstimate;
 	}
 
