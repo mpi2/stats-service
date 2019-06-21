@@ -10,7 +10,7 @@ public class NormalResult {
 	@JsonProperty("batch_included")
 	private Boolean batchIncluded;// true,
 	@JsonProperty("batch_p_val")
-	private Double batchPValue;// 3.38268269546894e-06,
+	private String batchPValue;// 3.38268269546894e-06,
 	@JsonProperty("residual_variances_homogeneity")
 	private Boolean residualVariancesHomogeneity;// : false,
 	@JsonProperty("residual_variances_homogeneity_p_val")
@@ -65,11 +65,11 @@ public class NormalResult {
 		this.batchIncluded = batchIncluded;
 	}
 
-	public Double getBatchPValue() {
+	public String getBatchPValue() {
 		return batchPValue;
 	}
 
-	public void setBatchPValue(Double batchPValue) {
+	public void setBatchPValue(String batchPValue) {
 		this.batchPValue = batchPValue;
 	}
 
