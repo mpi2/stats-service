@@ -16,7 +16,7 @@ public class NormalResult {
 	@JsonProperty("residual_variances_homogeneity_p_val")
 	private String residualVariancesHomogeneityPVal;// : 0.0216828136119118,
 	@JsonProperty("genotype_contribution")
-	private String genotypeContribution;// : 0.618217417150485,
+	private GenotypeContribution genotypeContribution;// : 0.618217417150485,
 	@JsonProperty("genotype_estimate")
 	private String genotypeEstimate;// : -0.0142470730062138,
 	@JsonProperty("genotype_standard_error")
@@ -89,11 +89,11 @@ public class NormalResult {
 		this.residualVariancesHomogeneityPVal = residualVariancesHomogeneityPVal;
 	}
 
-	public String getGenotypeContribution() {
+	public GenotypeContribution getGenotypeContribution() {
 		return genotypeContribution;
 	}
 
-	public void setGenotypeContribution(String genotypeContribution) {
+	public void setGenotypeContribution(GenotypeContribution genotypeContribution) {
 		this.genotypeContribution = genotypeContribution;
 	}
 
