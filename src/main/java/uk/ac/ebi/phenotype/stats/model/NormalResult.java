@@ -14,7 +14,7 @@ public class NormalResult {
 	@JsonProperty("residual_variances_homogeneity")
 	private Boolean residualVariancesHomogeneity;// : false,
 	@JsonProperty("residual_variances_homogeneity_p_val")
-	private Double residualVariancesHomogeneityPVal;// : 0.0216828136119118,
+	private String residualVariancesHomogeneityPVal;// : 0.0216828136119118,
 	@JsonProperty("genotype_contribution")
 	private String genotypeContribution;// : 0.618217417150485,
 	@JsonProperty("genotype_estimate")
@@ -81,11 +81,11 @@ public class NormalResult {
 		this.residualVariancesHomogeneity = residualVariancesHomogeneity;
 	}
 
-	public Double getResidualVariancesHomogeneityPVal() {
+	public String getResidualVariancesHomogeneityPVal() {
 		return residualVariancesHomogeneityPVal;
 	}
 
-	public void setResidualVariancesHomogeneityPVal(Double residualVariancesHomogeneityPVal) {
+	public void setResidualVariancesHomogeneityPVal(String residualVariancesHomogeneityPVal) {
 		this.residualVariancesHomogeneityPVal = residualVariancesHomogeneityPVal;
 	}
 
