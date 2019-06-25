@@ -10,11 +10,11 @@ public class GenotypeContribution {
 //    "sexual_dimorphism_detected": "Sex specific results are always reported"
 //  },
 	@JsonProperty("overal")
-	private Overal overal;
-	public Overal getOveral() {
+	private Double overal;
+	public Double getOveral() {
 		return overal;
 	}
-	public void setOveral(Overal overal) {
+	public void setOveral(Double overal) {
 		this.overal = overal;
 	}
 	public Double getSexFvkoPVal() {
