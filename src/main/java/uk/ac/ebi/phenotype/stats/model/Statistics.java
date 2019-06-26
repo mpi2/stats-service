@@ -176,6 +176,8 @@ public class Statistics  {
 	}
 
 	private String headerInfo;
+
+
 	public String getHeaderInfo() {
 		return headerInfo;
 	}
@@ -199,6 +201,16 @@ public class Statistics  {
 				+ ", zygosity=" + zygosity + ", colonyId=" + colonyId + ", impressParameterKey=" + impressParameterKey
 				+ ", impressProtocolKey=" + impressProtocolKey + ", result=" + result + ", headerInfo=" + headerInfo
 				+ "]";
+	}
+
+	private String procedureName;
+	public String getProcedureName() {
+		return procedureName;
+	}
+	
+	public void setProcedureName(String procedureName) {
+		this.procedureName=procedureName;
+		
 	}
 
 	

@@ -35,6 +35,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import uk.ac.ebi.phenotype.stats.model.Details;
+import uk.ac.ebi.phenotype.stats.model.ExperimentDetails;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 import uk.ac.ebi.phenotype.stats.model.StatsJson;
 
@@ -60,75 +62,110 @@ public class FileStatsDao {
 //    	return result;
 //    }
     
-    public Statistics readSuccesFile(String path) throws JsonParseException, JsonMappingException, IOException {
-    	//need the details section of the json object
-    	List<String> lines=null;
-    	try (Stream<String> stream = Files.lines(Paths.get(path))) {
-			//stream.forEach(System.out::println);
+	public Statistics readSuccesFile(String path) throws JsonParseException, JsonMappingException, IOException {
+		// need the details section of the json object
+		List<String> lines = null;
+		try (Stream<String> stream = Files.lines(Paths.get(path))) {
+			// stream.forEach(System.out::println);
 			lines = stream.collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	assert(lines.size()==1);
-    	String data=lines.get(0);
-    	String[]sections=data.split("\"result\"");
-    	String summaryInfo=sections[0].replace("{", "");//remove useless { on the end!!
-    	String json="{\"result\""+sections[1];
-    	//"observation_type": "unidimensional"
-    	//test if unidimensional and discard if not as we want numbers not strings
-    	if(!json.contains("unidimensional")) {
-    		System.out.println("not a unidimensional result so returning null");
-    		return null;
-    	}
-    	//we currently have {} to represent NA but java doesn't like it as it thinks it should be an object
-    	//so we need to replace all {} with the string null
-    	String json2=json.replace("{}", "null");
-    	
-    	
-    	//System.out.println("summaryInfo="+summaryInfo);
-    	
-    	
-    	
-    	//System.out.println("json="+json);
-    	
-    	ObjectMapper mapper = new ObjectMapper();
-    	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    	mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
-    	StatsJson value =null;
-    	
-    		value = mapper.readValue(json2 , StatsJson.class);
-    		//System.out.println(value.getResult().getDetails().getResponseType());
-    		//System.out.println(value.getResult().getDetails());
-		
-    	
-    	Statistics stats=new Statistics(value.getResult());
-    	int sampleGroupSize=value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
-    	int sexSize=value.getResult().getDetails().getOriginalSex().size();
-    	int responseSize=value.getResult().getDetails().getOriginalResponse().size();
-    	int dateOfExperimentSize=value.getResult().getDetails().getOriginalDateOfExperiment().size();
-    	stats.setAlleleAccession(value.getResult().getDetails().getAlleleAccession());//set as a top level variable so we can filter easily
-    	if(sampleGroupSize!=sexSize || sampleGroupSize!=responseSize || sampleGroupSize!=dateOfExperimentSize) {
-    		System.err.println("sizes of point data points don't match");
-    	};//all these lists should be the same size as refer to points.
-    	
-    	addDataFromFileHeader(summaryInfo, stats);
-    	return stats;
-    }
+		assert (lines.size() == 1);
+		String data = lines.get(0);
+		String[] sections = data.split("\"result\"");
+		String summaryInfo = sections[0].replace("{", "");// remove useless { on the end!!
+		String json = "{\"result\"" + sections[1];
+		// "observation_type": "unidimensional"
+		// test if unidimensional and discard if not as we want numbers not strings
+		if (!json.contains("unidimensional")) {
+			System.out.println("not a unidimensional result so returning null");
+			return null;
+		}
+		// we currently have {} to represent NA but java doesn't like it as it thinks it
+		// should be an object
+		// so we need to replace all {} with the string null
+		String json2 = json.replace("{}", "null");
 
-	private void addDataFromFileHeader(String summaryInfo, Statistics stats) {
-		String[] summaryFields = summaryInfo.split("\t");
-		stats.setProcedureStableId(summaryFields[2]);
-    	stats.setParameterStableId(summaryFields[4]);
-    	stats.setParameterStableName(summaryFields[5]);
-    	stats.setPhenotypingCenter(summaryFields[6]);
-    	stats.setAllele(summaryFields[7]);
-    	stats.setGeneSymbol(summaryFields[8]);
-    	stats.setGeneAccession(summaryFields[9]);
-    	stats.setPipelineStableId(summaryFields[11]);
-    	//stats.setAlleleAccession(summaryFields[12]);
-    	stats.setMetaDataGroup(summaryFields[13]);
-    	stats.setZygosity(summaryFields[14]);
-    	stats.setColonyId(summaryFields[15]);
+		// System.out.println("summaryInfo="+summaryInfo);
+
+		// System.out.println("json="+json);
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
+		StatsJson value = null;
+
+		value = mapper.readValue(json2, StatsJson.class);
+		// System.out.println(value.getResult().getDetails().getResponseType());
+		// System.out.println(value.getResult().getDetails());
+
+		Statistics stats = new Statistics(value.getResult());
+		int sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
+		int sexSize = value.getResult().getDetails().getOriginalSex().size();
+		int responseSize = value.getResult().getDetails().getOriginalResponse().size();
+		int dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
+		// get and set the main top level info for filtering for charts
+		if (value.getResult().getDetails() != null) {
+			Details details = value.getResult().getDetails();
+			if (details.getExperimentDetails() != null) {
+				ExperimentDetails experimentalDetails = details.getExperimentDetails();
+				moveToMainVariables(experimentalDetails, stats);
+			}
+		}
+
+		if (sampleGroupSize != sexSize || sampleGroupSize != responseSize || sampleGroupSize != dateOfExperimentSize) {
+			System.err.println("sizes of point data points don't match");
+		}
+		;// all these lists should be the same size as refer to points.
+
+		
+		return stats;
+	}
+
+	private void moveToMainVariables(ExperimentDetails experimentalDetails, Statistics stats) {
+		if (experimentalDetails.getAlleleAccession() != null) {
+			stats.setAlleleAccession(experimentalDetails.getAlleleAccession());// set as a top level variable so
+																				// we can filter easily
+		}
+
+		if (experimentalDetails.getProcedureStableId() != null) {
+			stats.setProcedureStableId(experimentalDetails.getProcedureStableId());
+		}
+		if (experimentalDetails.getProcedureName() != null) {
+			stats.setProcedureName(experimentalDetails.getProcedureName());
+		}
+		if (experimentalDetails.getParameterStableId() != null) {
+			stats.setParameterStableId(experimentalDetails.getParameterStableId());
+		}
+		if (experimentalDetails.getParameterName() != null) {
+			stats.setParameterStableName(experimentalDetails.getParameterName());
+		}
+		if (experimentalDetails.getPhenotypingCenter() != null) {
+			stats.setPhenotypingCenter(experimentalDetails.getPhenotypingCenter());
+		}
+		if (experimentalDetails.getAlleleSymbol() != null) {
+			stats.setAllele(experimentalDetails.getAlleleSymbol());
+		}
+		if (experimentalDetails.getGeneAccessionId() != null) {
+			stats.setGeneAccession(experimentalDetails.getGeneAccessionId());
+		}
+		if (experimentalDetails.getGeneSymbol() != null) {
+			stats.setGeneSymbol(experimentalDetails.getGeneSymbol());
+		}
+		if (experimentalDetails.getPipelineStableId() != null) {
+			stats.setPipelineStableId(experimentalDetails.getPipelineStableId());
+		}
+		if (experimentalDetails.getMetadataGroup() != null) {
+			stats.setMetaDataGroup(experimentalDetails.getMetadataGroup());
+		}
+		if (experimentalDetails.getZygosity() != null) {
+			stats.setZygosity(experimentalDetails.getZygosity());
+		}
+		if (experimentalDetails.getColonyId() != null) {
+			stats.setColonyId(experimentalDetails.getColonyId());
+		}
+		
 	}
     
     /**

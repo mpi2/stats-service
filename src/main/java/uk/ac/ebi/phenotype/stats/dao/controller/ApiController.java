@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -111,8 +114,8 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
-//			PageAble
-//			statisticsRepository.findAll(example, pageable)
+			//Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+			//Page<Statistics> results = statisticsRepository.findAll(example, firstPageWithTwoElements);
 //			if(listOfStatistics.size()==1) {
 //				singleStatistics=listOfStatistics.get(0);
 //			}
