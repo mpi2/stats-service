@@ -44,6 +44,7 @@ public class Statistics  {
 	
 	private String geneAccession;
 	
+	@JsonProperty("allele_accession_id")
 	private String alleleAccession;
 	
 	private String metaDataGroup;

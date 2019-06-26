@@ -72,7 +72,6 @@ public class FileStatsDao {
     	assert(lines.size()==1);
     	String data=lines.get(0);
     	String[]sections=data.split("\"result\"");
-    	System.out.println(sections.length);
     	String summaryInfo=sections[0].replace("{", "");//remove useless { on the end!!
     	String json="{\"result\""+sections[1];
     	//"observation_type": "unidimensional"
@@ -86,7 +85,7 @@ public class FileStatsDao {
     	String json2=json.replace("{}", "null");
     	
     	
-    	System.out.println("summaryInfo="+summaryInfo);
+    	//System.out.println("summaryInfo="+summaryInfo);
     	
     	
     	
@@ -191,6 +190,7 @@ public class FileStatsDao {
 		List<Statistics> statsList = new ArrayList<>();
 		for (String path : succesfulOnly) {
 			// if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
+			//if center and parameter aren't specified they are empty strings which are always contained in the path and so are true if not specified - odd I should prob change this.?
 			if (path.contains(center) && path.contains(parameter)) {
 
 				Statistics tempStats;
@@ -198,7 +198,7 @@ public class FileStatsDao {
 					tempStats = readSuccesFile(path);
 				} catch (Exception e) {
 					System.err.println("hit parsing error in one file with path"+path+" should continue without adding this result, setting tempStats to null...");
-					tempStats=null;
+					
 					e.printStackTrace();
 					continue;
 				}

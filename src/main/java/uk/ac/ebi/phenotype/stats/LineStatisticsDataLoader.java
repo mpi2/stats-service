@@ -56,7 +56,8 @@ public class LineStatisticsDataLoader implements CommandLineRunner {
 		try {
 			tempStats = statsProvider.readSuccesFile(filePath);
 		} catch (Exception e) {
-			// print the exception but continue to run...
+			System.err.println("hit parsing error in one file with path"+filePath+" should continue without adding this result, setting tempStats to null...");
+			tempStats=null;
 			e.printStackTrace();
 		}
         if(tempStats!=null) {
