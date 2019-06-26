@@ -7,6 +7,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Details {
+	
+	@JsonProperty("allele_accession_id")
+	private String alleleAccession;
+
+	public String getAlleleAccession() {
+		return alleleAccession;
+	}
+
+	public void setAlleleAccession(String alleleAccession) {
+		this.alleleAccession = alleleAccession;
+	}
+
+	public String getObservationType() {
+		return observationType;
+	}
+
+	public void setObservationType(String observationType) {
+		this.observationType = observationType;
+	}
+
+	public void setPoints(List<Point> points) {
+		this.points = points;
+	}
 
 	@JsonProperty("response_type")
 	private String responseType;

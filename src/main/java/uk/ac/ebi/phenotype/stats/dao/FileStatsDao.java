@@ -106,6 +106,7 @@ public class FileStatsDao {
     	int sexSize=value.getResult().getDetails().getOriginalSex().size();
     	int responseSize=value.getResult().getDetails().getOriginalResponse().size();
     	int dateOfExperimentSize=value.getResult().getDetails().getOriginalDateOfExperiment().size();
+    	stats.setAlleleAccession(value.getResult().getDetails().getAlleleAccession());//set as a top level variable so we can filter easily
     	if(sampleGroupSize!=sexSize || sampleGroupSize!=responseSize || sampleGroupSize!=dateOfExperimentSize) {
     		System.err.println("sizes of point data points don't match");
     	};//all these lists should be the same size as refer to points.
@@ -124,7 +125,7 @@ public class FileStatsDao {
     	stats.setGeneSymbol(summaryFields[8]);
     	stats.setGeneAccession(summaryFields[9]);
     	stats.setPipelineStableId(summaryFields[11]);
-    	stats.setAlleleAccession(summaryFields[12]);
+    	//stats.setAlleleAccession(summaryFields[12]);
     	stats.setMetaDataGroup(summaryFields[13]);
     	stats.setZygosity(summaryFields[14]);
     	stats.setColonyId(summaryFields[15]);

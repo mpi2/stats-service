@@ -111,6 +111,8 @@ public class ApiController {
 		
 			
 			listOfStatistics = statisticsRepository.findAll(example);
+//			PageAble
+//			statisticsRepository.findAll(example, pageable)
 //			if(listOfStatistics.size()==1) {
 //				singleStatistics=listOfStatistics.get(0);
 //			}
