@@ -30,7 +30,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import uk.ac.ebi.phenotype.stats.model.Statistics;
@@ -58,7 +60,7 @@ public class FileStatsDao {
 //    	return result;
 //    }
     
-    public Statistics readSuccesFile(String path) {
+    public Statistics readSuccesFile(String path) throws JsonParseException, JsonMappingException, IOException {
     	//need the details section of the json object
     	List<String> lines=null;
     	try (Stream<String> stream = Files.lines(Paths.get(path))) {
@@ -94,14 +96,11 @@ public class FileStatsDao {
     	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     	mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
     	StatsJson value =null;
-    	try {
+    	
     		value = mapper.readValue(json2 , StatsJson.class);
     		//System.out.println(value.getResult().getDetails().getResponseType());
     		//System.out.println(value.getResult().getDetails());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
     	
     	Statistics stats=new Statistics(value.getResult());
     	int sampleGroupSize=value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
@@ -194,7 +193,15 @@ public class FileStatsDao {
 			// if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {
 			if (path.contains(center) && path.contains(parameter)) {
 
-				Statistics tempStats = readSuccesFile(path);
+				Statistics tempStats;
+				try {
+					tempStats = readSuccesFile(path);
+				} catch (Exception e) {
+					System.err.println("hit parsing error in one file with path"+path+" should continue without adding this result, setting tempStats to null...");
+					tempStats=null;
+					e.printStackTrace();
+					continue;
+				}
 				// watch this as it's a hack to get the points as json objects in a list rather
 				// than seperate arrays and so we can store them this way in mongo
 				if (tempStats != null) {
