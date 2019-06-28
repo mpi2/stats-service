@@ -94,8 +94,6 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		if ( options.has("parameter")) {
 			parameter = (String) options.valuesOf("parameter").get(0);
 		}
-
-		solrClient.populateImpressPipelineStableKeys();
 		
 
 		boolean deleteFirst=false;
@@ -130,7 +128,10 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		System.out.println("decorating stats");
 		List<Statistics> decoratedStats=new ArrayList<>();
 		for(Statistics stat:stats) {
-			
+			String pipelineKey=solrClient.getPipelineKey(stat.getPipelineStableId());
+			String parameterKey=solrClient.getParameterKey(stat.getParameterStableId());
+			stat.setImpressProtocolKey(Integer.parseInt(pipelineKey));
+			stat.setImpressParameterKey(Integer.parseInt(parameterKey));
 		}
 		
 		return decoratedStats;
