@@ -18,8 +18,9 @@ import org.springframework.context.annotation.ComponentScan;
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
+import uk.ac.ebi.phenotype.stats.utilities.SolrClientForStatsDecoration;
 
-@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
+@ComponentScan("uk.ac.ebi.phenotype.stats.dao, uk.ac.ebi.phenotype.stats.utilities")
 @SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
@@ -28,9 +29,11 @@ public class StatisticsDataLoader implements CommandLineRunner {
 //	
 //	private String parameter;
 	
-	@Autowired
+	//@Autowired
 	private StatisticsRepository statsRepository;
 	private FileStatsDao statsProvider;
+	
+	private SolrClientForStatsDecoration solrClient;
 
 	
 	public static void main(String []args) {
@@ -45,9 +48,10 @@ public class StatisticsDataLoader implements CommandLineRunner {
 	}
 	
 	@Inject
-    public StatisticsDataLoader(FileStatsDao statsProvider, StatisticsRepository statsRepository) {
+    public StatisticsDataLoader(FileStatsDao statsProvider, StatisticsRepository statsRepository, SolrClientForStatsDecoration solrClient) {
 		this.statsProvider=statsProvider;
 		this.statsRepository=statsRepository;
+		this.solrClient=solrClient;
 	}
 
 	@Override
@@ -91,6 +95,8 @@ public class StatisticsDataLoader implements CommandLineRunner {
 			parameter = (String) options.valuesOf("parameter").get(0);
 		}
 
+		solrClient.populateImpressPipelineStableKeys();
+		
 
 		boolean deleteFirst=false;
 		
@@ -114,11 +120,22 @@ public class StatisticsDataLoader implements CommandLineRunner {
 			List<Statistics> stats = statsProvider.getAllStatsFromFiles(center, parameter, subList);
 			if (!stats.isEmpty()) {
 				System.out.println("stats size for saving to mongo=" + stats.size());
+				List<Statistics> decoratedStats=decorateStats(stats);
 				this.saveDataToMongo(stats);
 			}
 		}
 	}
 	
+	private List<Statistics> decorateStats(List<Statistics> stats) {
+		System.out.println("decorating stats");
+		List<Statistics> decoratedStats=new ArrayList<>();
+		for(Statistics stat:stats) {
+			
+		}
+		
+		return decoratedStats;
+	}
+
 	private void saveDataToMongo(List<Statistics>stats) {
 		System.out.println("saving data to mongodb!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		statsRepository.saveAll(stats);//save in old spring saveall in new spring

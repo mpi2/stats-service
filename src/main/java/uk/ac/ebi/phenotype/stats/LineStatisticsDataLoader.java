@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentScan("uk.ac.ebi.phenotype.stats.dao")
+@ComponentScan({"uk.ac.ebi.phenotype.stats.dao", "uk.ac.ebi.phenotype.stats.utilities"})
 @SpringBootApplication
 public class LineStatisticsDataLoader implements CommandLineRunner {
 
