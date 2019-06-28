@@ -1,9 +1,6 @@
 package uk.ac.ebi.phenotype.stats.model;
 
-import org.apache.commons.math3.stat.descriptive.rank.Percentile.EstimationType;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
