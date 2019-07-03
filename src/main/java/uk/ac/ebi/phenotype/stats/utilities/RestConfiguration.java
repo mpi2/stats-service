@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
 public class RestConfiguration {
@@ -21,6 +22,7 @@ public class RestConfiguration {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
                 false);
+        //mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.registerModule(new Jackson2HalModule());
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();

@@ -46,9 +46,9 @@ public class SolrClientForStatsDecoration {
 		try {
 			facetPivot = solrClient.query(query).getFacetPivot();
 			for (PivotField pivot : facetPivot.get(pivotFacet)) {
-				System.out.println(pivot.getField() + " facet value=" + pivot.getValue());
+				//System.out.println(pivot.getField() + " facet value=" + pivot.getValue());
 				List<PivotField> pivotParamNKey = pivot.getPivot();
-				System.out.println(pivotParamNKey.get(0).getField() + pivotParamNKey.get(0).getValue());
+				//System.out.println(pivotParamNKey.get(0).getField() + pivotParamNKey.get(0).getValue());
 				pipelineStableIdToStableKey.put(pivot.getValue().toString(),
 						pivotParamNKey.get(0).getValue().toString());
 			}
