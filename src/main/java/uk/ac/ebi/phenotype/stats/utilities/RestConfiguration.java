@@ -17,12 +17,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class RestConfiguration {
 
     @Bean
-    //@LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
                 false);
-        //mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.registerModule(new Jackson2HalModule());
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
