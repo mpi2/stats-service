@@ -2,6 +2,7 @@ package uk.ac.ebi.phenotype.stats.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,31 +31,45 @@ public class Details {
    @JsonProperty("observation_type")//: "unidimensional")
 	private String observationType;
    
-	private ExperimentDetails experimentDetails;
+	private Map<String,String> experimentDetails;
 	
 
-	public ExperimentDetails getExperimentDetails() {
+	public Map<String, String> getExperimentDetails() {
 		return experimentDetails;
 	}
-	
-	@JsonProperty("experiment_details")
-	public void setExperimentDetails(ExperimentDetails experimentDetails) {
+
+//	 "Experiment detail": {
+//		"status": "Successful",
+//				"procedure_group": "IMPC_CSD",
+//				"procedure_stable_id": "IMPC_CSD_003",
+//				"procedure_name": "Combined SHIRPA and Dysmorphology",
+//				"parameter_stable_id": "IMPC_CSD_032_001",
+//				"parameter_name": "Locomotor activity",
+//				"phenotyping_center": "BCM",
+//				"allele_symbol": "Tango2<em1(IMPC)Bay>",
+//				"allele_accession_id": "MGI:6257625",
+//				"gene_symbol": "Tango2",
+//				"gene_accession_id": "MGI:101825",
+//				"pipeline_name": "BCM Pipeline",
+//				"pipeline_stable_id": "BCM_001",
+//				"strain_accession_id": "MGI:2159965",
+//				"metadata_group": "90a6d0764193bc4243363bcdcc04be6e",
+//				"zygosity": "homozygote",
+//				"colony_id": "TANGB"
+//	},
+	@JsonProperty("Experiment detail")
+	public void setExperimentDetails(Map<String,String> experimentDetail) {
 		this.experimentDetails = experimentDetails;
 	}
 
-	@JsonProperty("original_sex")
+	@JsonProperty("Original_sex")
 	private List<String> originalSex;
 	
-	@JsonProperty("original_biological_sample_group")
+	@JsonProperty("Original_biological_sample_group")
 	private List<String> originalBiologicalSampleGroup;
-	
-	
+
 	private List<String> originalResponse;//values
-	
-	
 	private List<String> originalDateOfExperiment;
-	
-	
 	private List<Float> originalBodyWeight;
 	
 	@JsonProperty("points")
