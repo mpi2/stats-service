@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -109,7 +110,7 @@ public class FileStatsDao {
 		if (value.getResult().getDetails() != null) {
 			Details details = value.getResult().getDetails();
 			if (details.getExperimentDetails() != null) {
-				ExperimentDetails experimentalDetails = details.getExperimentDetails();
+				Map<String,String> experimentalDetails = details.getExperimentDetails();
 				moveToMainVariables(experimentalDetails, stats);
 			}
 		}
@@ -123,47 +124,48 @@ public class FileStatsDao {
 		return stats;
 	}
 
-	private void moveToMainVariables(ExperimentDetails experimentalDetails, Statistics stats) {
-		if (experimentalDetails.getAlleleAccession() != null) {
-			stats.setAlleleAccession(experimentalDetails.getAlleleAccession());// set as a top level variable so
+	private void moveToMainVariables(Map<String,String> experimentalDetails, Statistics stats) {
+		if (experimentalDetails.get("allele_accession_id") != null) {
+			stats.setAlleleAccession(experimentalDetails.get("gene_accession_id"));// set as a top level variable so
 																				// we can filter easily
 		}
 
-		if (experimentalDetails.getProcedureStableId() != null) {
-			stats.setProcedureStableId(experimentalDetails.getProcedureStableId());
+		//procedure_stable_id
+		if (experimentalDetails.get("procedure_stable_id")  != null) {
+			stats.setProcedureStableId(experimentalDetails.get("procedure_stable_id"));
 		}
-		if (experimentalDetails.getProcedureName() != null) {
-			stats.setProcedureName(experimentalDetails.getProcedureName());
+		if (experimentalDetails.get("procedure_name")  != null) {
+			stats.setProcedureName(experimentalDetails.get("procedure_name"));
 		}
-		if (experimentalDetails.getParameterStableId() != null) {
-			stats.setParameterStableId(experimentalDetails.getParameterStableId());
+		if (experimentalDetails.get("parameter_stable_id") != null) {
+			stats.setParameterStableId(experimentalDetails.get("parameter_stable_id"));
 		}
-		if (experimentalDetails.getParameterName() != null) {
-			stats.setParameterStableName(experimentalDetails.getParameterName());
+		if (experimentalDetails.get("parameter_name") != null) {
+			stats.setParameterStableName(experimentalDetails.get("parameter_name"));
 		}
-		if (experimentalDetails.getPhenotypingCenter() != null) {
-			stats.setPhenotypingCenter(experimentalDetails.getPhenotypingCenter());
+		if (experimentalDetails.get("phenotyping_center") != null) {
+			stats.setPhenotypingCenter(experimentalDetails.get("phenotyping_center"));
 		}
-		if (experimentalDetails.getAlleleSymbol() != null) {
-			stats.setAllele(experimentalDetails.getAlleleSymbol());
+		if (experimentalDetails.get("allele_symbol") != null) {
+			stats.setAllele(experimentalDetails.get("allele_symbol"));
 		}
-		if (experimentalDetails.getGeneAccessionId() != null) {
-			stats.setGeneAccession(experimentalDetails.getGeneAccessionId());
+		if (experimentalDetails.get("gene_accession_id") != null) {
+			stats.setGeneAccession(experimentalDetails.get("gene_accession_id"));
 		}
-		if (experimentalDetails.getGeneSymbol() != null) {
-			stats.setGeneSymbol(experimentalDetails.getGeneSymbol());
+		if (experimentalDetails.get("gene_symbol") != null) {
+			stats.setGeneSymbol(experimentalDetails.get("gene_symbol"));
 		}
-		if (experimentalDetails.getPipelineStableId() != null) {
-			stats.setPipelineStableId(experimentalDetails.getPipelineStableId());
+		if (experimentalDetails.get("pipeline_stable_id") != null) {
+			stats.setPipelineStableId(experimentalDetails.get("pipeline_stable_id"));
 		}
-		if (experimentalDetails.getMetadataGroup() != null) {
-			stats.setMetaDataGroup(experimentalDetails.getMetadataGroup());
+		if (experimentalDetails.get("metadata_group") != null) {
+			stats.setMetaDataGroup(experimentalDetails.get("metadata_group"));
 		}
-		if (experimentalDetails.getZygosity() != null) {
-			stats.setZygosity(experimentalDetails.getZygosity());
+		if (experimentalDetails.get("zygoisty") != null) {
+			stats.setZygosity(experimentalDetails.get("zygosity"));
 		}
-		if (experimentalDetails.getColonyId() != null) {
-			stats.setColonyId(experimentalDetails.getColonyId());
+		if (experimentalDetails.get("colony_id") != null) {
+			stats.setColonyId(experimentalDetails.get("colony_id"));
 		}
 		
 	}
