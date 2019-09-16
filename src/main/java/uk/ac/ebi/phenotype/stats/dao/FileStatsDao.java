@@ -75,7 +75,7 @@ public class FileStatsDao {
 		String data = lines.get(0);
 		String[] sections = data.split("\"Result\"");
 		String summaryInfo = sections[0].replace("{", "");// remove useless { on the end!!
-		String json = "{\"result\"" + sections[1];
+		String json = "{\"Result\"" + sections[1];
 		// "observation_type": "unidimensional"
 		// test if unidimensional and discard if not as we want numbers not strings
 		if (!json.contains("unidimensional")) {
