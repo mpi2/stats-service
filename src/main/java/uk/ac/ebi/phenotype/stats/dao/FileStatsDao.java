@@ -102,10 +102,19 @@ public class FileStatsDao {
 		// System.out.println(value.getResult().getDetails());
 
 		Statistics stats = new Statistics(value.getResult());
-		int sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
-		int sexSize = value.getResult().getDetails().getOriginalSex().size();
-		int responseSize = value.getResult().getDetails().getOriginalResponse().size();
-		int dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
+		int sampleGroupSize=0, sexSize=0 , responseSize=0 , dateOfExperimentSize=0;
+		if(value.getResult().getDetails().getOriginalBiologicalSampleGroup()!=null) {
+			sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
+		}
+		if(value.getResult().getDetails().getOriginalSex()!=null){
+			sexSize = value.getResult().getDetails().getOriginalSex().size();
+		}
+		if(value.getResult().getDetails().getOriginalResponse()!=null) {
+			responseSize = value.getResult().getDetails().getOriginalResponse().size();
+		}
+		if(value.getResult().getDetails().getOriginalDateOfExperiment()!=null) {
+			dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
+		}
 		// get and set the main top level info for filtering for charts
 		if (value.getResult().getDetails() != null) {
 			Details details = value.getResult().getDetails();
