@@ -20,7 +20,7 @@ import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 import uk.ac.ebi.phenotype.stats.utilities.SolrClientForStatsDecoration;
 
-@ComponentScan("uk.ac.ebi.phenotype.stats.dao, uk.ac.ebi.phenotype.stats.utilities")
+//@ComponentScan("uk.ac.ebi.phenotype.stats.dao, uk.ac.ebi.phenotype.stats.utilities")
 @SpringBootApplication
 public class StatisticsDataLoader implements CommandLineRunner {
 	
