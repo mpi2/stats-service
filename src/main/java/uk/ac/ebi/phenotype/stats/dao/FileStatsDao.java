@@ -74,7 +74,7 @@ public class FileStatsDao {
 		assert (lines.size() == 1);
 		String data = lines.get(0);
 		String[] sections = data.split("\"Result\"");
-		System.out.println("section 0="+sections[0]+ "section1="+ sections[1] );
+		//System.out.println("section 0="+sections[0]+ "section1="+ sections[1] );
 		String summaryInfo = sections[0].replace("{", "");// remove useless { on the end!!
 		String json = "{\"Result\"" + sections[1];
 		// "observation_type": "unidimensional"
