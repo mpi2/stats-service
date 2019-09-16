@@ -1,18 +1,18 @@
-/*******************************************************************************
- * Copyright 2015 EMBL - European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific
- * language governing permissions and limitations under the
- * License.
- *******************************************************************************/
+/******************************************************************************
+ Copyright 2015 EMBL - European Bioinformatics Institute
+
+ Licensed under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ either express or implied. See the License for the specific
+ language governing permissions and limitations under the
+ License.
+ */
 package uk.ac.ebi.phenotype.stats.dao;
 
 import java.io.File;
@@ -62,7 +62,7 @@ public class FileStatsDao {
 //    	return result;
 //    }
     
-	public Statistics readSuccesFile(String path) throws JsonParseException, JsonMappingException, IOException {
+	public Statistics readSuccesFile(String path) throws IOException {
 		// need the details section of the json object
 		List<String> lines = null;
 		try (Stream<String> stream = Files.lines(Paths.get(path))) {
@@ -73,7 +73,7 @@ public class FileStatsDao {
 		}
 		assert (lines.size() == 1);
 		String data = lines.get(0);
-		String[] sections = data.split("\"result\"");
+		String[] sections = data.split("\"Result\"");
 		String summaryInfo = sections[0].replace("{", "");// remove useless { on the end!!
 		String json = "{\"result\"" + sections[1];
 		// "observation_type": "unidimensional"
@@ -94,9 +94,8 @@ public class FileStatsDao {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
-		StatsJson value = null;
 
-		value = mapper.readValue(json2, StatsJson.class);
+		StatsJson value = mapper.readValue(json2, StatsJson.class);
 		// System.out.println(value.getResult().getDetails().getResponseType());
 		// System.out.println(value.getResult().getDetails());
 
@@ -117,7 +116,7 @@ public class FileStatsDao {
 		if (sampleGroupSize != sexSize || sampleGroupSize != responseSize || sampleGroupSize != dateOfExperimentSize) {
 			System.err.println("sizes of point data points don't match");
 		}
-		;// all these lists should be the same size as refer to points.
+		// all these lists should be the same size as refer to points.
 
 		
 		return stats;
@@ -167,28 +166,6 @@ public class FileStatsDao {
 		}
 		
 	}
-    
-    /**
-     * 
-     * @param rootStatsDirectory2 
-     * @param originalStatDir 
-     * @param center
-     * @param procedure
-     * @param parameter
-     * @param colonyId
-     * @param zygosity
-     * @param metadata
-     * @return path but empty string if no success file at that path
-     */
-//    public String getFilePathFromIndex(String center, String procedure, String parameter, String colonyId, String zygosity, String metadata) {
-//    	
-//    	String pathToFile=rootStatsDirectory+"/"+center+"/"+procedure+"/"+parameter+"/"+colonyId+"/"+zygosity+"/"+metadata+"/"+successFileName;
-//    	if(succesfulOnly.contains(pathToFile)) {
-//    		return pathToFile;
-//    	}
-//    	return "";
-//    }
-
     
 
     

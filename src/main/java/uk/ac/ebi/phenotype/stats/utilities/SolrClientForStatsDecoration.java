@@ -64,6 +64,7 @@ public class SolrClientForStatsDecoration {
 	
 	private void populateImpressParameterStableKeys() {
 		//http://ves-ebi-d2.ebi.ac.uk:8990/solr/pipeline/select?&facet.limit=-1&facet=on&q=*:*&facet.limit=3%20&facet.pivot.mincount=1&facet.pivot=parameter_stable_id,parameter_stable_key&rows=0
+		System.out.println("popluating Impress ids to DCC internal keys so we can make hyperlinks");
 		paramaterStableIdToStableKey = new HashMap<>();
 
 		String pivotFacet = "parameter_stable_id,parameter_stable_key";
