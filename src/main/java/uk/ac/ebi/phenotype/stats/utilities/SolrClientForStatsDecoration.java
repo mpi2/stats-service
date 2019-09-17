@@ -49,6 +49,7 @@ public class SolrClientForStatsDecoration {
 				//System.out.println(pivot.getField() + " facet value=" + pivot.getValue());
 				List<PivotField> pivotParamNKey = pivot.getPivot();
 				//System.out.println(pivotParamNKey.get(0).getField() + pivotParamNKey.get(0).getValue());
+				String keyShouldBeInt=pivotParamNKey.get(0).getValue().toString();
 				pipelineStableIdToStableKey.put(pivot.getValue().toString(),
 						pivotParamNKey.get(0).getValue().toString());
 			}

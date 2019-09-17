@@ -1,5 +1,7 @@
 package org.mousephenotype.cda.file.stats;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
@@ -73,8 +75,19 @@ public class FileStatsDaoTest {
 	public void testGetStatsSummary() {
 		List<String> succesfulOnly=new ArrayList<>();
 		succesfulOnly.add("/Users/jwarren/Documents/data/statsTestFiles/output_Successful.tsv");
-		List<Statistics> result = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
-	System.out.println("result = "+result);
+		List<Statistics> stats = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
+	System.out.println("result = "+stats);
+	assertTrue(stats.size()==1);
+		Statistics stats1 = stats.get(0);
+		assertNotNull(stats1.getResult().getDetails());
+		assertNotNull(stats1.getResult().getDetails().getExperimentDetail());
+		assertNotNull(stats1.getResult().getDetails().getExperimentDetail().get("parameter_stable_id"));
+		assertNotNull(stats1.getParameterStableId());
+		assertTrue(stats1.getParameterStableId().contains("IMPC_"));
+		assertTrue(stats1.getProcedureStableId().contains("_"));
+		System.out.println("experiment details="+stats1.getResult().getDetails().getExperimentDetail());
+
+
 	}
 
 //	@Test

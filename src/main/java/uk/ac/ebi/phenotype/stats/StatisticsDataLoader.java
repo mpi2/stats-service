@@ -137,7 +137,7 @@ public class StatisticsDataLoader implements CommandLineRunner {
 				stat.setImpressProtocolKey(Integer.parseInt(pipelineKey));
 			}
 			if(parameterKey==null) {
-				System.err.println("this parameterStableId internal key is null");
+				System.err.println("this parameterStableId internal key is null"+stat.getParameterStableId());
 			}else{
 				stat.setImpressParameterKey(Integer.parseInt(parameterKey));
 			}

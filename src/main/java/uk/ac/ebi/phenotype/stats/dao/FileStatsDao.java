@@ -118,8 +118,8 @@ public class FileStatsDao {
 		// get and set the main top level info for filtering for charts
 		if (value.getResult().getDetails() != null) {
 			Details details = value.getResult().getDetails();
-			if (details.getExperimentDetails() != null) {
-				Map<String,String> experimentalDetails = details.getExperimentDetails();
+			if (details.getExperimentDetail() != null) {
+				Map<String,String> experimentalDetails = details.getExperimentDetail();
 				moveToMainVariables(experimentalDetails, stats);
 			}
 		}

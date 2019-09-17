@@ -30,12 +30,13 @@ public class Details {
 	
    @JsonProperty("observation_type")//: "unidimensional")
 	private String observationType;
-   
-	private Map<String,String> experimentDetails;
+
+	@JsonProperty("Experiment detail")
+	private Map<String,String> experimentDetail;
 	
 
-	public Map<String, String> getExperimentDetails() {
-		return experimentDetails;
+	public Map<String, String> getExperimentDetail() {
+		return experimentDetail;
 	}
 
 //	 "Experiment detail": {
@@ -57,9 +58,9 @@ public class Details {
 //				"zygosity": "homozygote",
 //				"colony_id": "TANGB"
 //	},
-	@JsonProperty("Experiment detail")
-	public void setExperimentDetails(Map<String,String> experimentDetail) {
-		this.experimentDetails = experimentDetails;
+
+	public void setExperimentDetail(Map<String,String> experimentDetail) {
+		this.experimentDetail = experimentDetail;
 	}
 
 	@JsonProperty("Original_sex")
@@ -158,18 +159,20 @@ public class Details {
 		System.out.println("set point size="+this.points.size());
 		return points;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Details [responseType=" + responseType + ", rawDataSummaryStatistics=" + rawDataSummaryStatistics
-				+ ", originalSex=" + originalSex + ", originalBiologicalSampleGroup=" + originalBiologicalSampleGroup
-				+ ", originalResponse=" + originalResponse + ", originalDateOfExperiment=" + originalDateOfExperiment
-				+ ", originalBodyWeight=" + originalBodyWeight + "]";
+		return "Details{" +
+				"responseType='" + responseType + '\'' +
+				", rawDataSummaryStatistics=" + rawDataSummaryStatistics +
+				", observationType='" + observationType + '\'' +
+				", experimentDetail=" + experimentDetail +
+				", originalSex=" + originalSex +
+				", originalBiologicalSampleGroup=" + originalBiologicalSampleGroup +
+				", originalResponse=" + originalResponse +
+				", originalDateOfExperiment=" + originalDateOfExperiment +
+				", originalBodyWeight=" + originalBodyWeight +
+				", points=" + points +
+				'}';
 	}
-	
-	
-	
-	
-	
-	
 }
