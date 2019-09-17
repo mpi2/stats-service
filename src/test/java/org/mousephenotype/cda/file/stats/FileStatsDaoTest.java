@@ -3,6 +3,7 @@ package org.mousephenotype.cda.file.stats;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -65,14 +66,16 @@ public class FileStatsDaoTest {
 
 	}
 
-	@Autowired
-	FileStatsDao fileExperimentDao;
+	//@Autowired
+	FileStatsDao fileExperimentDao=new FileStatsDao();
 
-//	@Test
-//	public void testGetStatsSummary() {
-//		Statistics result = fileExperimentDao.getStatsSummary(center, procedure, parameter, colonyId, zygosity, metadata);
-//	System.out.println("result = "+result);
-//	}
+	@Test
+	public void testGetStatsSummary() {
+		List<String> succesfulOnly=new ArrayList<>();
+		succesfulOnly.add("/Users/jwarren/Documents/data/statsTestFiles/output_Successful.tsv");
+		List<Statistics> result = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
+	System.out.println("result = "+result);
+	}
 
 //	@Test
 //	public void getFilePath(){
