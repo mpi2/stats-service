@@ -69,7 +69,9 @@ public class Details {
 	private List<String> originalBiologicalSampleGroup;
 
 	private List<String> originalResponse;//values
+    @JsonProperty("Original_date_of_experiment")
 	private List<String> originalDateOfExperiment;
+    @JsonProperty("Original_body_weight")
 	private List<Float> originalBodyWeight;
 	
 	@JsonProperty("points")
@@ -133,7 +135,7 @@ public class Details {
 		this.originalBodyWeight = originalBodyWeight;
 	}
 	
-	@JsonProperty("original_response")
+	@JsonProperty("Original_response")
 	public void setOriginalResponse(List<String> originalResponse) {
 		this.originalResponse = originalResponse;
 	}

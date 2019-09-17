@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 //@JsonSerialize(typing = SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 public class VectorOutput {
 
-	
-	@JsonProperty("normal_result")
+
+	@JsonProperty("Normal result")
 	private NormalResult normalResult;
 
 	public NormalResult getNormalResult() {

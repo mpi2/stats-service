@@ -87,7 +87,7 @@ public class FileStatsDao {
 		// we currently have {} to represent NA but java doesn't like it as it thinks it
 		// should be an object
 		// so we need to replace all {} with the string null
-		String json2 = json.replace("{}", "null");
+		//String json2 = json.replace("{}", "null");
 
 		// System.out.println("summaryInfo="+summaryInfo);
 
@@ -97,24 +97,24 @@ public class FileStatsDao {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
 
-		StatsJson value = mapper.readValue(json2, StatsJson.class);
+		StatsJson value = mapper.readValue(json, StatsJson.class);
 		// System.out.println(value.getResult().getDetails().getResponseType());
 		// System.out.println(value.getResult().getDetails());
 
 		Statistics stats = new Statistics(value.getResult());
 		int sampleGroupSize=0, sexSize=0 , responseSize=0 , dateOfExperimentSize=0;
-//		if(value.getResult().getDetails().getOriginalBiologicalSampleGroup()!=null) {
-//			sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
-//		}
-//		if(value.getResult().getDetails().getOriginalSex()!=null){
-//			sexSize = value.getResult().getDetails().getOriginalSex().size();
-//		}
-//		if(value.getResult().getDetails().getOriginalResponse()!=null) {
-//			responseSize = value.getResult().getDetails().getOriginalResponse().size();
-//		}
-//		if(value.getResult().getDetails().getOriginalDateOfExperiment()!=null) {
-//			dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
-//		}
+		if(value.getResult().getDetails().getOriginalBiologicalSampleGroup()!=null) {
+			sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
+		}
+		if(value.getResult().getDetails().getOriginalSex()!=null){
+			sexSize = value.getResult().getDetails().getOriginalSex().size();
+		}
+		if(value.getResult().getDetails().getOriginalResponse()!=null) {
+			responseSize = value.getResult().getDetails().getOriginalResponse().size();
+		}
+		if(value.getResult().getDetails().getOriginalDateOfExperiment()!=null) {
+			dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
+		}
 		// get and set the main top level info for filtering for charts
 		if (value.getResult().getDetails() != null) {
 			Details details = value.getResult().getDetails();
@@ -214,6 +214,10 @@ public class FileStatsDao {
 
 	public List<Statistics> getAllStatsFromFiles(String center, String parameter, List<String> succesfulOnly) {
 
+		if(center==null&& parameter==null){
+			center="";
+			parameter="";
+		}
 		List<Statistics> statsList = new ArrayList<>();
 		for (String path : succesfulOnly) {
 			// if(path.contains("IMPC_HEM_038_001")&& path.contains("MARC")) {

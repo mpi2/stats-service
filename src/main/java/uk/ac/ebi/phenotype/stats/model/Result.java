@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Result {
 	
-	@JsonProperty("vectoroutput")
+	@JsonProperty("Vector output")
 	//@JsonIgnore
 	private  VectorOutput vectoroutput;
 	
@@ -18,6 +18,7 @@ public class Result {
 		this.vectoroutput = vectoroutput;
 	}
 
+	@JsonProperty("Details")
 	private  Details details;
 
 	public Details getDetails() {
