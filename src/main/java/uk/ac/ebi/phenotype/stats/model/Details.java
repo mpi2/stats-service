@@ -63,19 +63,19 @@ public class Details {
 		this.experimentDetail = experimentDetail;
 	}
 
-	@JsonProperty("Original_sex")
+
 	private List<String> originalSex;
 	
-	@JsonProperty("Original_biological_sample_group")
+
 	private List<String> originalBiologicalSampleGroup;
 
 	private List<String> originalResponse;//values
-    @JsonProperty("Original_date_of_experiment")
+
 	private List<String> originalDateOfExperiment;
-    @JsonProperty("Original_body_weight")
+
 	private List<Float> originalBodyWeight;
 	
-	@JsonProperty("points")
+
 	private List<Point> points=new ArrayList<>();
 	
 	
@@ -96,8 +96,8 @@ public class Details {
 	public List<String> getOriginalSex() {
 		return originalSex;
 	}
-	
-	
+
+	@JsonProperty("Original_sex")
 	public void setOriginalSex(List<String> originalSex) {
 		this.originalSex = originalSex;
 	}
@@ -106,8 +106,8 @@ public class Details {
 	public List<String> getOriginalBiologicalSampleGroup() {
 		return originalBiologicalSampleGroup;
 	}
-	
-	
+
+	@JsonProperty("Original_biological_sample_group")
 	public void setOriginalBiologicalSampleGroup(List<String> originalBiologicalSampleGroup) {
 		this.originalBiologicalSampleGroup = originalBiologicalSampleGroup;
 	}
@@ -140,8 +140,8 @@ public class Details {
 	public void setOriginalResponse(List<String> originalResponse) {
 		this.originalResponse = originalResponse;
 	}
-	
-	
+
+	@JsonProperty("points")
 	public List<Point> getPoints() {
 //		List<Point> points=new ArrayList<>();
 //		
@@ -150,7 +150,7 @@ public class Details {
 //		}
 		return this.points;
 	}
-	
+
 	public List<Point> setPoints() {
 		
 		for(int i=0; i<originalResponse.size(); i++) {
