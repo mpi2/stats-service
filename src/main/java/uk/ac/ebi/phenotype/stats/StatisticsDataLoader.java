@@ -124,14 +124,23 @@ public class StatisticsDataLoader implements CommandLineRunner {
 		}
 	}
 	
-	private List<Statistics> decorateStats(List<Statistics> stats) {
+	public List<Statistics> decorateStats(List<Statistics> stats) {
 		System.out.println("decorating stats");
 		List<Statistics> decoratedStats=new ArrayList<>();
 		for(Statistics stat:stats) {
 			String pipelineKey=solrClient.getPipelineKey(stat.getPipelineStableId());
 			String parameterKey=solrClient.getParameterKey(stat.getParameterStableId());
-			stat.setImpressProtocolKey(Integer.parseInt(pipelineKey));
-			stat.setImpressParameterKey(Integer.parseInt(parameterKey));
+			if(pipelineKey==null){
+				System.err.println("this pipelineStablieId internal key is null "+stat.getPipelineStableId());
+			}
+			else{
+				stat.setImpressProtocolKey(Integer.parseInt(pipelineKey));
+			}
+			if(parameterKey==null) {
+				System.err.println("this parameterStableId internal key is null");
+			}else{
+				stat.setImpressParameterKey(Integer.parseInt(parameterKey));
+			}
 		}
 		
 		return decoratedStats;
