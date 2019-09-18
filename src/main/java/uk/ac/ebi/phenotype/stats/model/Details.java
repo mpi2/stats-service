@@ -121,7 +121,7 @@ public class Details {
 	public List<String> getOriginalDateOfExperiment() {
 		return originalDateOfExperiment;
 	}
-	@JsonProperty("original_date_of_experiment")
+	@JsonProperty("Original_date_of_experiment")
 	public void setOriginalDateOfExperiment(List<String> originalDateOfExperiment) {
 		this.originalDateOfExperiment = originalDateOfExperiment;
 	}
@@ -131,7 +131,7 @@ public class Details {
 		return originalBodyWeight;
 	}
 	
-	@JsonProperty("original_body_weight")
+	@JsonProperty("Original_body_weight")
 	public void setOriginalBodyWeight(List<Float> originalBodyWeight) {
 		this.originalBodyWeight = originalBodyWeight;
 	}
