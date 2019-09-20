@@ -7,13 +7,10 @@ import javax.inject.Inject;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
 
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
@@ -118,32 +115,10 @@ public class StatisticsDataLoader implements CommandLineRunner {
 			List<Statistics> stats = statsProvider.getAllStatsFromFiles(center, parameter, subList);
 			if (!stats.isEmpty()) {
 				System.out.println("stats size for saving to mongo=" + stats.size());
-				List<Statistics> decoratedStats=decorateStats(stats);
+				List<Statistics> decoratedStats= solrClient.decorateStatsWithImpressKeys(stats);
 				this.saveDataToMongo(stats);
 			}
 		}
-	}
-	
-	public List<Statistics> decorateStats(List<Statistics> stats) {
-		System.out.println("decorating stats");
-		List<Statistics> decoratedStats=new ArrayList<>();
-		for(Statistics stat:stats) {
-			String pipelineKey=solrClient.getPipelineKey(stat.getPipelineStableId());
-			String parameterKey=solrClient.getParameterKey(stat.getParameterStableId());
-			if(pipelineKey==null){
-				System.err.println("this pipelineStablieId internal key is null "+stat.getPipelineStableId());
-			}
-			else{
-				stat.setImpressProtocolKey(Integer.parseInt(pipelineKey));
-			}
-			if(parameterKey==null) {
-				System.err.println("this parameterStableId internal key is null"+stat.getParameterStableId());
-			}else{
-				stat.setImpressParameterKey(Integer.parseInt(parameterKey));
-			}
-		}
-		
-		return decoratedStats;
 	}
 
 	private void saveDataToMongo(List<Statistics>stats) {

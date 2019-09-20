@@ -71,7 +71,7 @@ public class Statistics  {
 	
 	private Integer impressParameterKey;
 	
-	private Integer impressProtocolKey;
+	private Integer impressProcedureKey;
 	
 	public String getColonyId() {
 		return colonyId;
@@ -89,12 +89,12 @@ public class Statistics  {
 		this.impressParameterKey = impressParameterKey;
 	}
 
-	public Integer getImpressProtocolKey() {
-		return impressProtocolKey;
+	public Integer getImpressProcedureKey() {
+		return impressProcedureKey;
 	}
 
-	public void setImpressProtocolKey(int impressProtocolKey) {
-		this.impressProtocolKey = impressProtocolKey;
+	public void setImpressProcedureKey(int impressProcedureKey) {
+		this.impressProcedureKey = impressProcedureKey;
 	}
 
 	public String getZygosity() {
@@ -199,7 +199,7 @@ public class Statistics  {
 				+ ", geneSymbol=" + geneSymbol + ", phenotypingCenter=" + phenotypingCenter + ", geneAccession="
 				+ geneAccession + ", alleleAccession=" + alleleAccession + ", metaDataGroup=" + metaDataGroup
 				+ ", zygosity=" + zygosity + ", colonyId=" + colonyId + ", impressParameterKey=" + impressParameterKey
-				+ ", impressProtocolKey=" + impressProtocolKey + ", result=" + result + ", headerInfo=" + headerInfo
+				+ ", impressProtocolKey=" + impressProcedureKey + ", result=" + result + ", headerInfo=" + headerInfo
 				+ "]";
 	}
 

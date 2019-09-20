@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.solr.client.solrj.SolrClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.solr.server.support.HttpSolrClientFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,6 +30,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
+import uk.ac.ebi.phenotype.stats.utilities.SolrClientForStatsDecoration;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,12 +75,12 @@ public class FileStatsDaoTest {
 	FileStatsDao fileExperimentDao=new FileStatsDao();
 
 	@Test
-	public void testGetStatsSummary() {
+	public void testUnidimensionalStatsFromLocalFile() {
 		List<String> succesfulOnly=new ArrayList<>();
 		succesfulOnly.add("/Users/jwarren/Documents/data/statsTestFiles/output_Successful.tsv");
 		List<Statistics> stats = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
-	System.out.println("result = "+stats);
-	assertTrue(stats.size()==1);
+		System.out.println("result = "+stats);
+		assertTrue(stats.size()==1);
 		Statistics stats1 = stats.get(0);
 		assertNotNull(stats1.getResult().getDetails());
 		assertNotNull(stats1.getResult().getDetails().getExperimentDetail());
@@ -85,6 +88,9 @@ public class FileStatsDaoTest {
 		assertNotNull(stats1.getParameterStableId());
 		assertTrue(stats1.getParameterStableId().contains("IMPC_"));
 		assertTrue(stats1.getProcedureStableId().contains("_"));
+		SolrClientForStatsDecoration client=new SolrClientForStatsDecoration();
+		client.decorateStatsWithImpressKeys(stats);
+		assertNotNull(stats1.getImpressProcedureKey());
 		System.out.println("experiment details="+stats1.getResult().getDetails().getExperimentDetail());
 
 
