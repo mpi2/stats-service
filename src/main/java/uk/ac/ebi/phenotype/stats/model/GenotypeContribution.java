@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GenotypeContribution {
 
-//	"genotype_contribution": {
-//    "overal": 1.24889109502114e-12,
-//    "sex_fvko_p_val": 3.66832947622071e-13,
-//    "sexual_dimorphism_detected": "Sex specific results are always reported"
-//  },
-	@JsonProperty("overal")
+//"Genotype contribution": {
+//		"Overal": 0.491616333596917,
+//				"Sex FvKO p-value": 0.733997771962571,
+//				"Sex MvKO p-value": 0.155455797237431,
+//				"Sexual dimorphism detected": false
+//	},
+	@JsonProperty("Overal")
 	private Double overal;
 	public Double getOveral() {
 		return overal;
@@ -29,9 +30,20 @@ public class GenotypeContribution {
 	public void setSexualDimorphismDetected(String sexualDimorphismDetected) {
 		this.sexualDimorphismDetected = sexualDimorphismDetected;
 	}
-	@JsonProperty("sex_fvko_p_val")
+	@JsonProperty("Sex FvKO p-value")
 	private Double sexFvkoPVal;
-	@JsonProperty("sexual_dimorphism_detected")
+
+	public Double getSexMvkoPValue() {
+		return sexMvkoPValue;
+	}
+
+	public void setSexMvkoPValue(Double sexMvkoPValue) {
+		this.sexMvkoPValue = sexMvkoPValue;
+	}
+
+	@JsonProperty("Sex MvKO p-value")
+	private Double sexMvkoPValue;
+	@JsonProperty("Sexual dimorphism detected")
 	private String sexualDimorphismDetected;
 	
 }

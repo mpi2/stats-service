@@ -1,5 +1,7 @@
 package uk.ac.ebi.phenotype.stats.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GenotypeEstimate {
 //	"genotype_estimate": {
 //    "value": 0,
@@ -10,8 +12,13 @@ public class GenotypeEstimate {
 //    "level": 0.95
 //  },
 
+	@JsonProperty("Value")
 	private Double value;
+	@JsonProperty("Confidence")
 	private Confidence confidence;
+	@JsonProperty("Level")
+	private Double level;
+
 	public Double getValue() {
 		return value;
 	}

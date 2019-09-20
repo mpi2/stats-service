@@ -4,25 +4,22 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.apache.solr.client.solrj.SolrClient;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.solr.server.support.HttpSolrClientFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -73,15 +70,19 @@ public class FileStatsDaoTest {
 
 	//@Autowired
 	FileStatsDao fileExperimentDao=new FileStatsDao();
-
-	@Test
-	public void testUnidimensionalStatsFromLocalFile() {
+	List<Statistics> unidimensionalStats =null;
+	@Before
+	public void setUp(){
 		List<String> succesfulOnly=new ArrayList<>();
 		succesfulOnly.add("/Users/jwarren/Documents/data/statsTestFiles/output_Successful.tsv");
-		List<Statistics> stats = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
-		System.out.println("result = "+stats);
-		assertTrue(stats.size()==1);
-		Statistics stats1 = stats.get(0);
+		unidimensionalStats = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
+	}
+	@Test
+	public void testUnidimensionalStatsFromLocalFile() {
+
+		System.out.println("result = "+ unidimensionalStats);
+		assertTrue(unidimensionalStats.size()==1);
+		Statistics stats1 = unidimensionalStats.get(0);
 		assertNotNull(stats1.getResult().getDetails());
 		assertNotNull(stats1.getResult().getDetails().getExperimentDetail());
 		assertNotNull(stats1.getResult().getDetails().getExperimentDetail().get("parameter_stable_id"));
@@ -89,7 +90,7 @@ public class FileStatsDaoTest {
 		assertTrue(stats1.getParameterStableId().contains("IMPC_"));
 		assertTrue(stats1.getProcedureStableId().contains("_"));
 		SolrClientForStatsDecoration client=new SolrClientForStatsDecoration();
-		client.decorateStatsWithImpressKeys(stats);
+		client.decorateStatsWithImpressKeys(unidimensionalStats);
 		assertNotNull(stats1.getImpressProcedureKey());
 		System.out.println("experiment details="+stats1.getResult().getDetails().getExperimentDetail());
 

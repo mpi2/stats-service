@@ -6,25 +6,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class NormalResult {
 
-	@JsonProperty("batch_included")
+	@JsonProperty("Batch included")
 	private Boolean batchIncluded;// true,
-	@JsonProperty("batch_p_val")
+	@JsonProperty("Batch p val")
 	private String batchPValue;// 3.38268269546894e-06,
-	@JsonProperty("residual_variances_homogeneity")
+	@JsonProperty("Residual variances homogeneity")
 	private Boolean residualVariancesHomogeneity;// : false,
 	@JsonProperty("residual_variances_homogeneity_p_val")
 	private String residualVariancesHomogeneityPVal;// : 0.0216828136119118,
-	@JsonProperty("genotype_contribution")
+	@JsonProperty("Genotype contribution")
 	private GenotypeContribution genotypeContribution;// : 0.618217417150485,
-	@JsonProperty("genotype_estimate")
+	@JsonProperty("Genotype estimate")
 	private GenotypeEstimate genotypeEstimate;// : -0.0142470730062138,
-	@JsonProperty("genotype_standard_error")
+	@JsonProperty("Genotype standard error")
 	private Double genotypeStandardError;// : 0.0292248626248843,
 	@JsonProperty("Genotype p-value")
 	private String genotypePValue;// : 0.626780054354097,
 
-	@JsonProperty("genotype_percentage_change")
-	private GenotypePercentageChange genotypePercentageChange;// "genotype_percentage_change":{"sexfemale_genotypeexperimental":1.30037066864167,"sexmale_genotypeexperimental":5.07831051934796}
+	@JsonProperty("Genotype effect size")
+	private GenotypeEffectSize genotypeEffectSize;
 
 	public GpResidualsNormalityTest getGp1ResidualsNormalityTest() {
 		return gp1ResidualsNormalityTest;
@@ -128,13 +128,7 @@ public class NormalResult {
 		this.genotypePValue = genotypePValue;
 	}
 
-	public GenotypePercentageChange getGenotypePercentageChange() {
-		return genotypePercentageChange;
-	}
 
-	public void setGenotypePercentageChange(GenotypePercentageChange genotypePercentageChange) {
-		this.genotypePercentageChange = genotypePercentageChange;
-	}
 
 	public SexEstimate getSexEstimate() {
 		return sexEstimate;
