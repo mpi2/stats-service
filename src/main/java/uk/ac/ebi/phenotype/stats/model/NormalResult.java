@@ -34,9 +34,9 @@ public class NormalResult {
 		this.gp1ResidualsNormalityTest = gp1ResidualsNormalityTest;
 	}
 
-	@JsonProperty("sex_estimate")
+	@JsonProperty("Sex estimate")
 	private SexEstimate sexEstimate;// : {},
-	@JsonProperty("sex_standard_error")
+	@JsonProperty("Sex standard error")
 	private Double sexStandardError;
 	@JsonProperty("sex_p_val")
 	private Double sexPValue;

@@ -15,7 +15,16 @@ public class GenotypeEstimate {
 	@JsonProperty("Value")
 	private Double value;
 	@JsonProperty("Confidence")
-	private Confidence confidence;
+	private GenotypeEstimateConfidence confidence;
+
+	public Double getLevel() {
+		return level;
+	}
+
+	public void setLevel(Double level) {
+		this.level = level;
+	}
+
 	@JsonProperty("Level")
 	private Double level;
 
@@ -25,10 +34,12 @@ public class GenotypeEstimate {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	public Confidence getConfidence() {
+	public GenotypeEstimateConfidence getConfidence() {
 		return confidence;
 	}
-	public void setConfidence(Confidence confidence) {
+	public void setConfidence(GenotypeEstimateConfidence confidence) {
 		this.confidence = confidence;
 	}
+
+
 }

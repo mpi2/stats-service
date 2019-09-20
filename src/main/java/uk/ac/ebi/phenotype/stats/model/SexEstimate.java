@@ -1,9 +1,23 @@
 package uk.ac.ebi.phenotype.stats.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SexEstimate {
-	//"sex_estimate":{"value":-0.455444113587709,"level":0.95}
+	//"Sex estimate": {
+	//          "Value": -2.09818570317918,
+	//          "Confidence": {
+	//            "SexMale lower": -3.45029866424449,
+	//            "SexMale upper": -0.746072742113871
+	//          },
+	//          "Level": 0.95
+	//        },
+	@JsonProperty("Value")
 	private Double value;
+	@JsonProperty("Confidence")
+	private SexEstimateConfidence confidence;
+	@JsonProperty("Level")
 	private Double level;
+
 	public Double getValue() {
 		return value;
 	}

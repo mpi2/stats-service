@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import uk.ac.ebi.phenotype.stats.dao.FileStatsDao;
+import uk.ac.ebi.phenotype.stats.model.GenotypeEstimate;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 import uk.ac.ebi.phenotype.stats.utilities.SolrClientForStatsDecoration;
 
@@ -71,31 +72,53 @@ public class FileStatsDaoTest {
 	//@Autowired
 	FileStatsDao fileExperimentDao=new FileStatsDao();
 	List<Statistics> unidimensionalStats =null;
+	Statistics unidimensionalStats1 =null;
 	@Before
 	public void setUp(){
 		List<String> succesfulOnly=new ArrayList<>();
 		succesfulOnly.add("/Users/jwarren/Documents/data/statsTestFiles/output_Successful.tsv");
 		unidimensionalStats = fileExperimentDao.getAllStatsFromFiles(null, null, succesfulOnly);
-	}
-	@Test
-	public void testUnidimensionalStatsFromLocalFile() {
-
-		System.out.println("result = "+ unidimensionalStats);
-		assertTrue(unidimensionalStats.size()==1);
-		Statistics stats1 = unidimensionalStats.get(0);
-		assertNotNull(stats1.getResult().getDetails());
-		assertNotNull(stats1.getResult().getDetails().getExperimentDetail());
-		assertNotNull(stats1.getResult().getDetails().getExperimentDetail().get("parameter_stable_id"));
-		assertNotNull(stats1.getParameterStableId());
-		assertTrue(stats1.getParameterStableId().contains("IMPC_"));
-		assertTrue(stats1.getProcedureStableId().contains("_"));
 		SolrClientForStatsDecoration client=new SolrClientForStatsDecoration();
 		client.decorateStatsWithImpressKeys(unidimensionalStats);
-		assertNotNull(stats1.getImpressProcedureKey());
-		System.out.println("experiment details="+stats1.getResult().getDetails().getExperimentDetail());
+		unidimensionalStats1 = unidimensionalStats.get(0);
+	}
 
+	@Test
+	public void testUnidimensionalTopLevel(){
+		System.out.println("result = "+ unidimensionalStats);
+		assertTrue(unidimensionalStats.size()==1);
+		assertNotNull(unidimensionalStats1.getParameterStableId());
+		assertTrue(unidimensionalStats1.getParameterStableId().contains("IMPC_"));
+		assertTrue(unidimensionalStats1.getProcedureStableId().contains("_"));
+	}
+
+	@Test
+	public void testUnidimensionalDetails() {
+		assertNotNull(unidimensionalStats1.getResult().getDetails());
+		assertNotNull(unidimensionalStats1.getResult().getDetails().getExperimentDetail());
+		assertNotNull(unidimensionalStats1.getResult().getDetails().getExperimentDetail().get("parameter_stable_id"));
+		assertNotNull(unidimensionalStats1.getImpressProcedureKey());
+		System.out.println("experiment details="+ unidimensionalStats1.getResult().getDetails().getExperimentDetail());
+	}
+
+	@Test
+	public void testUnidimensionalGenotypeEstimate(){
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEstimate());
+		GenotypeEstimate genotypeEstimate = unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEstimate();
+		assertNotNull(genotypeEstimate.getValue());
+		assertNotNull(genotypeEstimate.getConfidence().getLower());
+		assertNotNull(genotypeEstimate.getConfidence().getUpper());
+		assertNotNull(genotypeEstimate.getLevel());
 
 	}
+
+	@Test
+	public void testUndimensionalGenotypeValues(){
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypePValue());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeStandardError());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexStandardError());
+	}
+
 
 //	@Test
 //	public void getFilePath(){
