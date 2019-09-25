@@ -113,13 +113,13 @@ public class SolrClientForStatsDecoration {
 			String procedureKey= getPipelineKey(stat.getProcedureStableId());
 			String parameterKey= getParameterKey(stat.getParameterStableId());
 			if(procedureKey==null){
-				System.err.println("this pipelineStablieId internal key is null "+stat.getPipelineStableId());
+				System.out.println("this pipelineStablieId internal key is null "+stat.getPipelineStableId());
 			}
 			else{
 				stat.setImpressProcedureKey(Integer.parseInt(procedureKey));
 			}
 			if(parameterKey==null) {
-				System.err.println("this parameterStableId internal key is null"+stat.getParameterStableId());
+				System.out.println("this parameterStableId internal key is null"+stat.getParameterStableId());
 			}else{
 				stat.setImpressParameterKey(Integer.parseInt(parameterKey));
 			}

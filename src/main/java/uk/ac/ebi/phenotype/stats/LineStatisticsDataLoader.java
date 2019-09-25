@@ -1,8 +1,6 @@
 package uk.ac.ebi.phenotype.stats;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -12,8 +10,6 @@ import uk.ac.ebi.phenotype.stats.dao.StatisticsRepository;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @ComponentScan({"uk.ac.ebi.phenotype.stats.dao", "uk.ac.ebi.phenotype.stats.utilities"})
 @SpringBootApplication
@@ -54,7 +50,7 @@ public class LineStatisticsDataLoader implements CommandLineRunner {
     private void loadDataIntoMongo(String filePath) {
         Statistics tempStats=null;
 		try {
-			tempStats = statsProvider.readSuccesFile(filePath);
+			tempStats = statsProvider.readSuccessFile(filePath);
 		} catch (Exception e) {
 			System.err.println("hit parsing error in one file with path"+filePath+" should continue without adding this result, setting tempStats to null...");
 			tempStats=null;

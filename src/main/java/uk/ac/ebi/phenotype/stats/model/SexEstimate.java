@@ -13,6 +13,15 @@ public class SexEstimate {
 	//        },
 	@JsonProperty("Value")
 	private Double value;
+
+	public SexEstimateConfidence getConfidence() {
+		return confidence;
+	}
+
+	public void setConfidence(SexEstimateConfidence confidence) {
+		this.confidence = confidence;
+	}
+
 	@JsonProperty("Confidence")
 	private SexEstimateConfidence confidence;
 	@JsonProperty("Level")
@@ -30,4 +39,6 @@ public class SexEstimate {
 	public void setLevel(Double level) {
 		this.level = level;
 	}
+
+
 }

@@ -34,9 +34,9 @@ import uk.ac.ebi.phenotype.stats.utilities.SolrClientForStatsDecoration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class)
 @TestPropertySource("file:${user.home}/configfiles/${profile:dev}/test.properties")
-public class FileStatsDaoTest {
+public class FileStatsDaoUnidimensionalTest {
 
-	private final Logger logger = LoggerFactory.getLogger(FileStatsDaoTest.class);
+	private final Logger logger = LoggerFactory.getLogger(FileStatsDaoUnidimensionalTest.class);
 //chart for this set here: http://www.mousephenotype.org/data/charts?accession=MGI:1915747&parameter_stable_id=IMPC_HEM_038_001
 	String center="MARC";
 	String procedure="IMPC_HEM";
@@ -81,6 +81,7 @@ public class FileStatsDaoTest {
 		SolrClientForStatsDecoration client=new SolrClientForStatsDecoration();
 		client.decorateStatsWithImpressKeys(unidimensionalStats);
 		unidimensionalStats1 = unidimensionalStats.get(0);
+
 	}
 
 	@Test
@@ -119,6 +120,23 @@ public class FileStatsDaoTest {
 		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexStandardError());
 	}
 
+	@Test
+	public void testGenotypeEffectSize(){
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize().getValue());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize().getVariable());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize().getType());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize().getModel());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getGenotypeEffectSize().getPercentageChange());
+	}
+
+	@Test
+	public void testSexEstimate(){
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexEstimate());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexEstimate().getLevel());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexEstimate().getValue());
+		assertNotNull(unidimensionalStats1.getResult().getVectoroutput().getNormalResult().getSexEstimate().getConfidence());
+	}
 
 //	@Test
 //	public void getFilePath(){

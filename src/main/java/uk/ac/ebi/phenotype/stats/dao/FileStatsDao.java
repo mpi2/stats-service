@@ -15,7 +15,6 @@
  */
 package uk.ac.ebi.phenotype.stats.dao;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,19 +24,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import uk.ac.ebi.phenotype.stats.model.Details;
-import uk.ac.ebi.phenotype.stats.model.ExperimentDetails;
 import uk.ac.ebi.phenotype.stats.model.Statistics;
 import uk.ac.ebi.phenotype.stats.model.StatsJson;
 
@@ -63,7 +57,8 @@ public class FileStatsDao {
 //    	return result;
 //    }
     
-	public Statistics readSuccesFile(String path) throws IOException {
+	public Statistics readSuccessFile(String path) throws IOException {
+		Statistics stats=null;
 		// need the details section of the json object
 		List<String> lines = null;
 		try (Stream<String> stream = Files.lines(Paths.get(path))) {
@@ -80,57 +75,58 @@ public class FileStatsDao {
 		String json = "{\"result\"" + sections[1];
 		// "observation_type": "unidimensional"
 		// test if unidimensional and discard if not as we want numbers not strings
-		if (!json.contains("unidimensional")) {
-			System.out.println("not a unidimensional result so returning null");
-			return null;
-		}
-		// we currently have {} to represent NA but java doesn't like it as it thinks it
-		// should be an object
-		// so we need to replace all {} with the string null
-		//String json2 = json.replace("{}", "null");
+		if (json.contains("unidimensional")){
 
-		// System.out.println("summaryInfo="+summaryInfo);
+			// we currently have {} to represent NA but java doesn't like it as it thinks it
+			// should be an object
+			// so we need to replace all {} with the string null
+			//String json2 = json.replace("{}", "null");
 
-		// System.out.println("json="+json);
+			// System.out.println("summaryInfo="+summaryInfo);
 
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
+			// System.out.println("json="+json);
 
-		StatsJson value = mapper.readValue(json, StatsJson.class);
-		// System.out.println(value.getResult().getDetails().getResponseType());
-		// System.out.println(value.getResult().getDetails());
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
 
-		Statistics stats = new Statistics(value.getResult());
-		int sampleGroupSize=0, sexSize=0 , responseSize=0 , dateOfExperimentSize=0;
-		if(value.getResult().getDetails().getOriginalBiologicalSampleGroup()!=null) {
-			sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
-		}
-		if(value.getResult().getDetails().getOriginalSex()!=null){
-			sexSize = value.getResult().getDetails().getOriginalSex().size();
-		}
-		if(value.getResult().getDetails().getOriginalResponse()!=null) {
-			responseSize = value.getResult().getDetails().getOriginalResponse().size();
-		}
-		if(value.getResult().getDetails().getOriginalDateOfExperiment()!=null) {
-			dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
-		}
-		// get and set the main top level info for filtering for charts
-		if (value.getResult().getDetails() != null) {
-			Details details = value.getResult().getDetails();
-			if (details.getExperimentDetail() != null) {
-				Map<String,String> experimentalDetails = details.getExperimentDetail();
-				moveToMainVariables(experimentalDetails, stats);
+			StatsJson value = mapper.readValue(json, StatsJson.class);
+			// System.out.println(value.getResult().getDetails().getResponseType());
+			// System.out.println(value.getResult().getDetails());
+
+			stats = new Statistics(value.getResult());
+			int sampleGroupSize = 0, sexSize = 0, responseSize = 0, dateOfExperimentSize = 0;
+			if (value.getResult().getDetails().getOriginalBiologicalSampleGroup() != null) {
+				sampleGroupSize = value.getResult().getDetails().getOriginalBiologicalSampleGroup().size();
 			}
-		}
+			if (value.getResult().getDetails().getOriginalSex() != null) {
+				sexSize = value.getResult().getDetails().getOriginalSex().size();
+			}
+			if (value.getResult().getDetails().getOriginalResponse() != null) {
+				responseSize = value.getResult().getDetails().getOriginalResponse().size();
+			}
+			if (value.getResult().getDetails().getOriginalDateOfExperiment() != null) {
+				dateOfExperimentSize = value.getResult().getDetails().getOriginalDateOfExperiment().size();
+			}
+			// get and set the main top level info for filtering for charts
+			if (value.getResult().getDetails() != null) {
+				Details details = value.getResult().getDetails();
+				if (details.getExperimentDetail() != null) {
+					Map<String, String> experimentalDetails = details.getExperimentDetail();
+					moveToMainVariables(experimentalDetails, stats);
+				}
+			}
 
-		if (sampleGroupSize != sexSize || sampleGroupSize != responseSize || sampleGroupSize != dateOfExperimentSize) {
-			System.err.println("sizes of point data points don't match");
+			if (sampleGroupSize != sexSize || sampleGroupSize != responseSize || sampleGroupSize != dateOfExperimentSize) {
+				System.err.println("sizes of point data points don't match");
+			}
+			// all these lists should be the same size as refer to points.
 		}
-		// all these lists should be the same size as refer to points.
-
-		
-		return stats;
+		if(json.contains("categorical") ){
+			//run the categorical stats objects creation here that is different objects to unidimensional
+			System.out.println("running categorical stats creation!!!!!!!!!!");
+		}
+	return stats;
 	}
 
 	private void moveToMainVariables(Map<String,String> experimentalDetails, Statistics stats) {
@@ -226,7 +222,7 @@ public class FileStatsDao {
 
 				Statistics tempStats;
 				try {
-					tempStats = readSuccesFile(path);
+					tempStats = readSuccessFile(path);
 				} catch (Exception e) {
 					System.err.println("hit parsing error in one file with path"+path+" should continue without adding this result, setting tempStats to null...");
 					

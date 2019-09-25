@@ -23,6 +23,14 @@ public class NormalResult {
 	@JsonProperty("Genotype p-value")
 	private String genotypePValue;// : 0.626780054354097,
 
+	public GenotypeEffectSize getGenotypeEffectSize() {
+		return genotypeEffectSize;
+	}
+
+	public void setGenotypeEffectSize(GenotypeEffectSize genotypeEffectSize) {
+		this.genotypeEffectSize = genotypeEffectSize;
+	}
+
 	@JsonProperty("Genotype effect size")
 	private GenotypeEffectSize genotypeEffectSize;
 
